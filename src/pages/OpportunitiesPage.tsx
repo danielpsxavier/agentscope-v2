@@ -112,7 +112,8 @@ const OpportunitiesPage = () => {
           </div>
           <div className="flex items-center gap-4">
             <Button
-              variant="outline"
+              variant="ghost"
+              size="sm"
               onClick={() => navigate('/oportunidades/cadastro-externo')}
             >
               <LinkIcon className="mr-2 h-4 w-4" />
