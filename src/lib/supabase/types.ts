@@ -270,6 +270,33 @@ export type Database = {
           },
         ]
       }
+      users: {
+        Row: {
+          created_at: string
+          email: string
+          id: number
+          password_hash: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: number
+          password_hash: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: number
+          password_hash?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
