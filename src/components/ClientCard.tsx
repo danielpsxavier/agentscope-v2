@@ -3,14 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Building, Users, Eye, Rocket, Cog, Clover } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
-
-export type Client = {
-  name: string
-  department: string
-  leads: number
-  status: 'Alto' | 'Médio' | 'Baixo'
-  trend: 'Alta' | 'Média' | 'Baixa'
-}
+import { Client } from '@/types'
 
 const statusStyles = {
   Alto: { bg: 'bg-[#EEF2FF]', text: 'text-[#3730A3]' },
@@ -37,7 +30,7 @@ const trendInfo = {
 }
 
 export const ClientCard = ({ client }: { client: Client }) => {
-  const { name, department, leads, status, trend } = client
+  const { id, name, department, leads, status, trend } = client
   const statusStyle = statusStyles[status]
   const TrendIcon = trendInfo[trend].icon
 
@@ -86,7 +79,7 @@ export const ClientCard = ({ client }: { client: Client }) => {
           <span>{trendInfo[trend].text}</span>
         </div>
         <Link
-          to="#"
+          to={`/clientes/${id}`}
           className="flex items-center gap-2 text-sm text-neutral-textSecondary hover:text-primary-start transition-colors"
         >
           <Eye className="w-4 h-4" />

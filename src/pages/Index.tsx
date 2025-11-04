@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header'
 import { MetricCard } from '@/components/MetricCard'
-import { ClientCard, type Client } from '@/components/ClientCard'
+import { ClientCard } from '@/components/ClientCard'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Search, Briefcase, Zap, BarChart, Rocket } from 'lucide-react'
+import { Client } from '@/types'
 
 const metrics = [
   {
@@ -42,6 +43,7 @@ const metrics = [
 
 const clients: Client[] = [
   {
+    id: '1',
     name: 'TechCorp Brasil',
     department: 'Operações',
     leads: 5,
@@ -49,6 +51,7 @@ const clients: Client[] = [
     trend: 'Alta',
   },
   {
+    id: '2',
     name: 'Indústria XYZ',
     department: 'Vendas',
     leads: 3,
@@ -56,6 +59,7 @@ const clients: Client[] = [
     trend: 'Média',
   },
   {
+    id: '3',
     name: 'Logística ABC',
     department: 'Supply Chain',
     leads: 2,
