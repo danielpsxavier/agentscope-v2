@@ -9,6 +9,7 @@ import Layout from './components/Layout'
 import ClientsPage from './pages/Clients'
 import ClientDetailPage from './pages/ClientDetail'
 import FormsPage from './pages/Forms'
+import AnalysisPage from './pages/AnalysisPage'
 
 const App = () => (
   <BrowserRouter
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/clientes" element={<ClientsPage />} />
             <Route path="/clientes/:clientId" element={<ClientDetailPage />} />
             <Route path="/forms" element={<FormsPage />} />
+            <Route path="/analises" element={<AnalysisPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

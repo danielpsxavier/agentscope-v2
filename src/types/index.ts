@@ -19,3 +19,12 @@ export type AIAnalysis = {
     status: 'Em análise'
   }[]
 }
+
+export type AgentIdea = Tables<'agent_ideas'> & {
+  ai_analyses: {
+    opportunity_mappings: {
+      client_name_on_mapping: string
+      department_on_mapping: string | null
+    } | null
+  } | null
+}
