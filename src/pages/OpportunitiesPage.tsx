@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react'
-import { Header } from '@/components/Header'
+import { useNavigate } from 'react-router-dom'
 import { NewOpportunitySheet } from '@/components/NewOpportunitySheet'
 import { getOpportunities } from '@/services/opportunities'
 import { Opportunity } from '@/types'
 import { OpportunityCard } from '@/components/OpportunityCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { FileX, AlertTriangle } from 'lucide-react'
+import { FileX, AlertTriangle, Link as LinkIcon, Plus } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const OpportunitiesPage = () => {
   const [isNewSheetOpen, setIsNewSheetOpen] = useState(false)
   const [opportunities, setOpportunities] = useState<Opportunity[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchOpportunities = async () => {
@@ -44,7 +46,7 @@ const OpportunitiesPage = () => {
           {Array.from({ length: 3 }).map((_, index) => (
             <div
               key={index}
-              className="flex flex-col space-y-3 p-4 border rounded-lg"
+              className="flex flex-col space-y-3 p-4 border rounded-lg bg-white"
             >
               <div className="flex items-center space-x-4">
                 <Skeleton className="h-12 w-12 rounded-lg" />
@@ -98,12 +100,33 @@ const OpportunitiesPage = () => {
   return (
     <div className="p-lg">
       <div className="container mx-auto max-w-[1200px]">
-        <Header
-          title="Oportunidades"
-          subtitle="Visualize os mapeamentos de oportunidade e seu status de processamento"
-          buttonText="Nova Oportunidade"
-          onButtonClick={() => setIsNewSheetOpen(true)}
-        />
+        <header className="flex items-center justify-between h-[88px]">
+          <div>
+            <h1 className="text-[28px] font-bold text-neutral-textPrimary">
+              Oportunidades
+            </h1>
+            <p className="text-sm text-neutral-textSecondary">
+              Visualize os mapeamentos de oportunidade e seu status de
+              processamento
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/oportunidades/cadastro-externo')}
+            >
+              <LinkIcon className="mr-2 h-4 w-4" />
+              Cadastrar Oportunidade Externa
+            </Button>
+            <Button
+              className="primary-btn flex items-center gap-2.5"
+              onClick={() => setIsNewSheetOpen(true)}
+            >
+              <Plus className="w-4 h-4" />
+              <span>Nova Oportunidade</span>
+            </Button>
+          </div>
+        </header>
         <section className="mt-6">{renderContent()}</section>
       </div>
       <NewOpportunitySheet

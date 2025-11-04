@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase/client'
 import { TablesInsert } from '@/lib/supabase/types'
 import { OpportunityMappingData } from '@/schemas/opportunityMappingSchema'
+import { ExternalOpportunityData } from '@/schemas/externalOpportunitySchema'
 import { findClientByName, createClient } from './clients'
 
 /**
@@ -101,19 +102,20 @@ export const createOpportunityMappingWithClientCheck = async (
   return { data, error }
 }
 
-// The old function is now replaced by the more comprehensive one above.
-// To keep the file clean, we remove the old one.
-export const createOpportunityMapping = async (
-  mappingData: TablesInsert<'opportunity_mappings'>,
+/**
+ * Submits a new opportunity mapping via the public, unauthenticated edge function.
+ * @param formData - The data from the external opportunity form.
+ * @returns An object containing the response data or null, and any potential error.
+ */
+export const submitExternalOpportunity = async (
+  formData: ExternalOpportunityData,
 ) => {
-  console.warn(
-    'createOpportunityMapping is deprecated. Use createOpportunityMappingWithClientCheck instead.',
+  const { data, error } = await supabase.functions.invoke(
+    'external-opportunity',
+    {
+      body: formData,
+    },
   )
-  const { data, error } = await supabase
-    .from('opportunity_mappings')
-    .insert([mappingData])
-    .select()
-    .single()
 
   return { data, error }
 }

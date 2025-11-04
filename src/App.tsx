@@ -10,6 +10,8 @@ import ClientsPage from './pages/Clients'
 import ClientDetailPage from './pages/ClientDetail'
 import OpportunitiesPage from './pages/OpportunitiesPage'
 import AnalysisPage from './pages/AnalysisPage'
+import ExternalOpportunityFormPage from './pages/ExternalOpportunityForm'
+import ThankYouPage from './pages/ThankYou'
 
 const App = () => (
   <BrowserRouter
@@ -20,6 +22,14 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Routes>
+          {/* Public Routes */}
+          <Route
+            path="/oportunidades/cadastro-externo"
+            element={<ExternalOpportunityFormPage />}
+          />
+          <Route path="/obrigado" element={<ThankYouPage />} />
+
+          {/* Authenticated Routes */}
           <Route path="/login" element={<Navigate to="/" replace />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
