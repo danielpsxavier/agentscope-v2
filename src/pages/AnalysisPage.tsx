@@ -7,7 +7,7 @@ import { getAgentIdeas, invokeAnalysisFunction } from '@/services/analysis'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Bot, AlertTriangle, RefreshCw } from 'lucide-react'
-import { toast } from '@/components/ui/use-toast'
+import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 
 const AnalysisPage = () => {
@@ -37,26 +37,27 @@ const AnalysisPage = () => {
     return () => clearInterval(interval)
   }, [fetchIdeas])
 
-  const handleAnalyze = async () => {
+  const handleAnalyze = () => {
     setIsAnalyzing(true)
-    try {
-      const { data, error: invokeError } = await invokeAnalysisFunction()
-      if (invokeError) throw invokeError
-      toast({
-        title: 'Análise Concluída!',
-        description: data.message || 'O processo de análise foi finalizado.',
-      })
-      await fetchIdeas(false)
-    } catch (err: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Erro na Análise',
-        description: 'Ocorreu um erro ao executar a análise de IA.',
-      })
-      console.error(err)
-    } finally {
-      setIsAnalyzing(false)
-    }
+
+    const promise = invokeAnalysisFunction().then((result) => {
+      if (result.error) {
+        throw new Error(result.error.message || 'Ocorreu um erro na análise.')
+      }
+      return result.data
+    })
+
+    toast.promise(promise, {
+      loading: 'Análise em andamento...',
+      success: (data) => {
+        fetchIdeas(false)
+        return data.message || 'Análise concluída com sucesso!'
+      },
+      error: (err) => err.message || 'Erro na análise. Tente novamente.',
+      finally: () => {
+        setIsAnalyzing(false)
+      },
+    })
   }
 
   const renderContent = () => {
