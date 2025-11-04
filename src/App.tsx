@@ -14,6 +14,7 @@ import ExternalOpportunityFormPage from './pages/ExternalOpportunityForm'
 import ThankYouPage from './pages/ThankYou'
 import LoginPage from './pages/Login'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import UsersPage from './pages/UsersPage'
 
 const AppRoutes = () => {
   const { user } = useAuth()
@@ -39,6 +40,7 @@ const AppRoutes = () => {
           <Route path="/clientes/:clientId" element={<ClientDetailPage />} />
           <Route path="/oportunidades" element={<OpportunitiesPage />} />
           <Route path="/analises" element={<AnalysisPage />} />
+          <Route path="/usuarios" element={<UsersPage />} />
         </Route>
       </Route>
 

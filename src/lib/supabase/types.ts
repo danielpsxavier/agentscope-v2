@@ -270,33 +270,27 @@ export type Database = {
           },
         ]
       }
-      users: {
+      profiles: {
         Row: {
-          created_at: string
-          email: string
-          id: number
-          password_hash: string
-          profile_picture_url: string | null
-          updated_at: string
-          username: string
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
         }
         Insert: {
-          created_at?: string
-          email: string
-          id?: number
-          password_hash: string
-          profile_picture_url?: string | null
-          updated_at?: string
-          username: string
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
         }
         Update: {
-          created_at?: string
-          email?: string
-          id?: number
-          password_hash?: string
-          profile_picture_url?: string | null
-          updated_at?: string
-          username?: string
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
         }
         Relationships: []
       }

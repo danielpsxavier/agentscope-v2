@@ -8,6 +8,7 @@ import {
   Lightbulb,
   LogOut,
   User as UserIcon,
+  Users2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
@@ -42,6 +43,11 @@ const menuItems = [
     name: 'Análises',
     path: '/analises',
     icon: BarChart2,
+  },
+  {
+    name: 'Usuários',
+    path: '/usuarios',
+    icon: Users2,
   },
 ]
 
