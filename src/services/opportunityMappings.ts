@@ -78,6 +78,12 @@ export const createOpportunityMappingWithClientCheck = async (
     email_spreadsheet_activities: formData.emailSpreadsheetActivities,
     bottlenecks: formData.bottlenecks,
     critical_systems: formData.criticalSystems,
+    main_user: formData.mainUser,
+    time_spent_today: formData.timeSpentToday,
+    expected_benefit: formData.expectedBenefit,
+    expected_impact_percentage: formData.expectedImpactPercentage,
+    budget: formData.budget,
+    deadline_goal: formData.deadlineGoal,
     client_interest_level: (() => {
       switch (formData.clientInterestLevel) {
         case 'Muito Alto':

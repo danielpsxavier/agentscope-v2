@@ -31,16 +31,21 @@ import { toast } from 'sonner'
 
 const FormSection = ({
   title,
+  description,
   children,
 }: {
   title: string
+  description: string
   children: React.ReactNode
 }) => (
-  <div className="space-y-4">
-    <h3 className="text-lg font-semibold border-b pb-2 text-neutral-textPrimary">
-      {title}
-    </h3>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">{children}</div>
+  <div className="space-y-6 rounded-lg border border-neutral-border bg-neutral-cardBackground p-6 shadow-soft">
+    <div>
+      <h3 className="text-lg font-semibold text-neutral-textPrimary">
+        {title}
+      </h3>
+      <p className="mt-1 text-sm text-neutral-textSecondary">{description}</p>
+    </div>
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">{children}</div>
   </div>
 )
 
@@ -50,7 +55,11 @@ const ExternalOpportunityFormPage = () => {
 
   const form = useForm<ExternalOpportunityData>({
     resolver: zodResolver(externalOpportunitySchema),
-    defaultValues: {},
+    defaultValues: {
+      operation_size_on_mapping: 'Pequena',
+      digital_maturity_on_mapping: 'Baixo',
+      client_interest_level: 'Medio',
+    },
   })
 
   const onSubmit = async (data: ExternalOpportunityData) => {
@@ -97,15 +106,18 @@ const ExternalOpportunityFormPage = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8"
               >
-                <FormSection title="Informações do Cliente">
+                <FormSection
+                  title="1️⃣ Dados Gerais do Cliente"
+                  description="Informações básicas sobre o cliente e a área em foco."
+                >
                   <FormField
                     control={form.control}
                     name="client_name_on_mapping"
                     render={({ field }) => (
                       <FormItem className="md:col-span-2">
-                        <FormLabel>Nome do Cliente (Obrigatório)</FormLabel>
+                        <FormLabel>Nome do Cliente</FormLabel>
                         <FormControl>
-                          <Input placeholder="Ex: Empresa S.A." {...field} />
+                          <Input placeholder="Ex: TechCorp Brasil" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -116,7 +128,7 @@ const ExternalOpportunityFormPage = () => {
                     name="department_on_mapping"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Área / Departamento</FormLabel>
+                        <FormLabel>Área / Departamento Avaliado</FormLabel>
                         <FormControl>
                           <Input placeholder="Ex: Vendas" {...field} />
                         </FormControl>
@@ -129,7 +141,7 @@ const ExternalOpportunityFormPage = () => {
                     name="responsible_on_mapping"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Responsável na Área</FormLabel>
+                        <FormLabel>Responsável da Área</FormLabel>
                         <FormControl>
                           <Input placeholder="Ex: João da Silva" {...field} />
                         </FormControl>
@@ -137,18 +149,27 @@ const ExternalOpportunityFormPage = () => {
                       </FormItem>
                     )}
                   />
-                </FormSection>
-
-                <FormSection title="Contexto da Operação">
                   <FormField
                     control={form.control}
                     name="operation_size_on_mapping"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Tamanho da Operação</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Ex: 10 pessoas" {...field} />
-                        </FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione o tamanho" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Pequena">Pequena</SelectItem>
+                            <SelectItem value="Média">Média</SelectItem>
+                            <SelectItem value="Grande">Grande</SelectItem>
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -158,13 +179,22 @@ const ExternalOpportunityFormPage = () => {
                     name="digital_maturity_on_mapping"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Maturidade Digital</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Ex: Baixa, Média, Alta"
-                            {...field}
-                          />
-                        </FormControl>
+                        <FormLabel>Nível de Maturidade Digital</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione o nível" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Baixo">Baixo</SelectItem>
+                            <SelectItem value="Médio">Médio</SelectItem>
+                            <SelectItem value="Alto">Alto</SelectItem>
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -174,7 +204,7 @@ const ExternalOpportunityFormPage = () => {
                     name="main_systems_on_mapping"
                     render={({ field }) => (
                       <FormItem className="md:col-span-2">
-                        <FormLabel>Sistemas Principais</FormLabel>
+                        <FormLabel>Sistemas Principais Utilizados</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Descreva os sistemas, ERPs, CRMs, etc."
@@ -185,31 +215,18 @@ const ExternalOpportunityFormPage = () => {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="critical_systems"
-                    render={({ field }) => (
-                      <FormItem className="md:col-span-2">
-                        <FormLabel>Sistemas Críticos</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            placeholder="Quais sistemas são essenciais para a operação?"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                 </FormSection>
 
-                <FormSection title="Desafios e Oportunidades">
+                <FormSection
+                  title="2️⃣ Contexto e Desafio"
+                  description="Entenda os objetivos, dores e gargalos atuais da operação."
+                >
                   <FormField
                     control={form.control}
                     name="business_objective"
                     render={({ field }) => (
                       <FormItem className="md:col-span-2">
-                        <FormLabel>Objetivo de Negócio</FormLabel>
+                        <FormLabel>Objetivo de negócio da área</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Qual o principal objetivo que a área busca alcançar?"
@@ -225,7 +242,7 @@ const ExternalOpportunityFormPage = () => {
                     name="repetitive_tasks"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Tarefas Repetitivas</FormLabel>
+                        <FormLabel>Tarefas repetitivas ou manuais</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Ex: copiar e colar dados, preencher relatórios..."
@@ -241,10 +258,12 @@ const ExternalOpportunityFormPage = () => {
                     name="email_spreadsheet_activities"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Uso de E-mails/Planilhas</FormLabel>
+                        <FormLabel>
+                          Atividades com muita troca de e-mails/planilhas
+                        </FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Processos que dependem muito desses meios."
+                            placeholder="Descreva os processos que dependem muito desses meios."
                             {...field}
                           />
                         </FormControl>
@@ -256,8 +275,10 @@ const ExternalOpportunityFormPage = () => {
                     control={form.control}
                     name="bottlenecks"
                     render={({ field }) => (
-                      <FormItem className="md:col-span-2">
-                        <FormLabel>Gargalos e Retrabalhos</FormLabel>
+                      <FormItem>
+                        <FormLabel>
+                          Gargalos ou retrabalhos frequentes
+                        </FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Onde o processo costuma parar ou precisar de refação?"
@@ -268,9 +289,6 @@ const ExternalOpportunityFormPage = () => {
                       </FormItem>
                     )}
                   />
-                </FormSection>
-
-                <FormSection title="Detalhes Adicionais">
                   <FormField
                     control={form.control}
                     name="main_user"
@@ -316,6 +334,34 @@ const ExternalOpportunityFormPage = () => {
                       </FormItem>
                     )}
                   />
+                </FormSection>
+
+                <FormSection
+                  title="3️⃣ Processos e Ferramentas"
+                  description="Detalhes sobre a infraestrutura tecnológica e de dados."
+                >
+                  <FormField
+                    control={form.control}
+                    name="critical_systems"
+                    render={({ field }) => (
+                      <FormItem className="md:col-span-2">
+                        <FormLabel>Sistemas críticos</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Quais sistemas são essenciais para a operação da área?"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </FormSection>
+
+                <FormSection
+                  title="4️⃣ Observações Finais"
+                  description="Notas e percepções finais sobre a oportunidade."
+                >
                   <FormField
                     control={form.control}
                     name="expected_impact_percentage"
@@ -368,20 +414,20 @@ const ExternalOpportunityFormPage = () => {
                     name="client_interest_level"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Nível de Interesse</FormLabel>
+                        <FormLabel>Nível de interesse do cliente</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Selecione o nível" />
+                              <SelectValue placeholder="Selecione o nível de interesse" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="Alto">Alto</SelectItem>
-                            <SelectItem value="Medio">Médio</SelectItem>
                             <SelectItem value="Baixo">Baixo</SelectItem>
+                            <SelectItem value="Medio">Médio</SelectItem>
+                            <SelectItem value="Alto">Alto</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />

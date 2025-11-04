@@ -14,8 +14,8 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     )
 
-    const body = await req.json()
-    const { client_name_on_mapping, ...mappingData } = body
+    const mappingData = await req.json()
+    const { client_name_on_mapping } = mappingData
 
     if (!client_name_on_mapping) {
       throw new Error('O nome do cliente é obrigatório.')
@@ -64,7 +64,6 @@ Deno.serve(async (req) => {
       .insert({
         ...mappingData,
         client_id: clientId,
-        client_name_on_mapping,
       })
 
     if (mappingError) {

@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { FormSection } from './FormSection'
+import { Input } from '../ui/input'
 
 interface ContextChallengeSectionProps {
   form: UseFormReturn<OpportunityMappingData>
@@ -81,6 +82,48 @@ export const ContextChallengeSection = ({
             <FormControl>
               <Textarea
                 placeholder="Onde o processo costuma parar ou precisar de refação?"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="mainUser"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Usuário Principal</FormLabel>
+            <FormControl>
+              <Input placeholder="Quem mais usaria a solução?" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="timeSpentToday"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Tempo Gasto Hoje</FormLabel>
+            <FormControl>
+              <Input placeholder="Ex: 4 horas/dia" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="expectedBenefit"
+        render={({ field }) => (
+          <FormItem className="md:col-span-2">
+            <FormLabel>Benefício Esperado</FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder="Qual o principal ganho esperado com a automação?"
                 {...field}
               />
             </FormControl>
