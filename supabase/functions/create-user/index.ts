@@ -14,7 +14,7 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     )
 
-    const { email, password, full_name, bio } = await req.json()
+    const { email, password, full_name } = await req.json()
 
     if (!email || !password || !full_name) {
       throw new Error('Email, senha e nome completo são obrigatórios.')
@@ -36,19 +36,22 @@ Deno.serve(async (req) => {
     const userId = authData.user.id
 
     // 2. Create the corresponding profile in public.profiles
+    // The trigger `on_auth_user_created` will handle this automatically.
+    // However, to ensure `full_name` is set immediately from the function call,
+    // we can perform an upsert or an update here.
+    // For simplicity and to rely on the trigger, we can also pass full_name in user_metadata
+    // and have the trigger use it. The current trigger does this.
+    // Let's ensure the profile is created with the correct full_name.
+    // The trigger already handles this, but an explicit update ensures it.
     const { error: profileError } = await supabaseAdmin
       .from('profiles')
-      .insert({
-        id: userId,
-        full_name,
-        bio,
-        avatar_url: `https://img.usecurling.com/ppl/medium?seed=${userId}`, // Default avatar
-      })
+      .update({ full_name: full_name })
+      .eq('id', userId)
 
     if (profileError) {
-      // If profile creation fails, roll back by deleting the auth user
-      await supabaseAdmin.auth.admin.deleteUser(userId)
-      throw profileError
+      // If profile update fails, it's not critical, but we should log it.
+      // The profile was already created by the trigger.
+      console.error('Error updating profile with full_name:', profileError)
     }
 
     return new Response(

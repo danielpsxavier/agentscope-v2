@@ -22,7 +22,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 
@@ -45,7 +44,6 @@ export const NewUserSheet = ({
       email: '',
       password: '',
       full_name: '',
-      bio: '',
     },
   })
 
@@ -124,23 +122,6 @@ export const NewUserSheet = ({
                       <FormLabel>Senha</FormLabel>
                       <FormControl>
                         <Input type="password" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="bio"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Bio</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          rows={3}
-                          placeholder="Uma breve descrição do usuário..."
-                          {...field}
-                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -47,5 +47,4 @@ export type UserProfile = {
   created_at?: string
   full_name: string | null
   avatar_url: string | null
-  bio: string | null
 }
