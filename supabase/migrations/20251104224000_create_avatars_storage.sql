@@ -27,3 +27,4 @@ CREATE POLICY "Users can update their own avatar."
   ON storage.objects FOR UPDATE
   TO authenticated
   USING ( auth.uid()::text = (storage.foldername(name))[1] );
+

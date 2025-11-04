@@ -12,3 +12,4 @@ DROP COLUMN IF EXISTS ai_usage,
 DROP COLUMN IF EXISTS initial_agent_ideas,
 DROP COLUMN IF EXISTS experience_based_decisions,
 DROP COLUMN IF EXISTS additional_notes;
+

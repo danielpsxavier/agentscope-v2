@@ -6,3 +6,4 @@ SELECT id, 'Daniel Xavier', 'https://img.usecurling.com/ppl/medium?gender=male&s
 FROM auth.users
 WHERE email = 'dani.sperche@gmail.com'
 ON CONFLICT (id) DO NOTHING;
+

@@ -292,11 +292,29 @@ export type Database = {
           full_name?: string | null
           id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_id_fkey'
+            columns: ['id']
+            isOneToOne: true
+            referencedRelation: 'user_profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
     }
     Views: {
-      [_ in never]: never
+      user_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
