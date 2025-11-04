@@ -10,7 +10,6 @@ import {
   User as UserIcon,
   Users2,
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
 import {
   DropdownMenu,
@@ -22,6 +21,16 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from './ui/button'
+import {
+  Sidebar as SidebarContainer,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 
 const menuItems = [
   {
@@ -61,35 +70,45 @@ export const Sidebar = () => {
   }
 
   return (
-    <aside className="w-[280px] bg-neutral-sidebar text-neutral-textInverse flex flex-col fixed h-full">
-      <div className="px-5 pt-5 pb-4 flex items-center gap-3 h-[88px]">
-        <div className="w-11 h-11 rounded-base bg-primary-start flex items-center justify-center">
-          <Bot className="w-6 h-6 text-white" />
+    <SidebarContainer
+      collapsible="icon"
+      className="bg-neutral-sidebar text-neutral-textInverse border-r-0 fixed h-full z-20"
+    >
+      <SidebarHeader className="h-[88px] flex items-center justify-between px-5">
+        <div className="flex items-center gap-3 overflow-hidden">
+          <div className="w-11 h-11 rounded-base bg-primary-start flex items-center justify-center flex-shrink-0">
+            <Bot className="w-6 h-6 text-white" />
+          </div>
+          <span className="text-white font-semibold text-lg whitespace-nowrap">
+            AgentScope
+          </span>
         </div>
-        <span className="text-white font-semibold text-lg">AgentScope</span>
-      </div>
-      <nav className="mt-6 flex-1 px-3">
-        <ul>
+        <SidebarTrigger className="text-white hover:bg-white/5 hover:text-white" />
+      </SidebarHeader>
+      <SidebarContent as="nav" className="flex-1 px-3">
+        <SidebarMenu>
           {menuItems.map((item) => (
-            <li key={item.name}>
+            <SidebarMenuItem key={item.name}>
               <NavLink
                 to={item.path}
                 end={item.path === '/'}
-                className={({ isActive }) =>
-                  cn(
-                    'h-12 flex items-center gap-3 px-5 rounded-base text-sm text-[#CBD5E1] hover:bg-white/5 transition-colors',
-                    { 'text-white bg-white/5 font-semibold': isActive },
-                  )
-                }
+                className="w-full"
               >
-                <item.icon className="w-[18px] h-[18px]" />
-                <span>{item.name}</span>
+                {({ isActive }) => (
+                  <SidebarMenuButton
+                    className="h-12 text-sm text-[#CBD5E1] hover:bg-white/5 justify-start w-full data-[active=true]:bg-white/5 data-[active=true]:text-white data-[active=true]:font-semibold"
+                    isActive={isActive}
+                  >
+                    <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+                    <span>{item.name}</span>
+                  </SidebarMenuButton>
+                )}
               </NavLink>
-            </li>
+            </SidebarMenuItem>
           ))}
-        </ul>
-      </nav>
-      <div className="p-3 border-t border-white/10">
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter className="p-3 border-t border-white/10">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -133,7 +152,7 @@ export const Sidebar = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
-    </aside>
+      </SidebarFooter>
+    </SidebarContainer>
   )
 }
