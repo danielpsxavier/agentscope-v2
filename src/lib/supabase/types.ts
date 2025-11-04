@@ -76,6 +76,7 @@ export type Database = {
           main_pains: string | null
           maturity_level: string | null
           opportunity_mapping_id: number
+          processed: boolean
           updated_at: string
         }
         Insert: {
@@ -85,6 +86,7 @@ export type Database = {
           main_pains?: string | null
           maturity_level?: string | null
           opportunity_mapping_id: number
+          processed?: boolean
           updated_at?: string
         }
         Update: {
@@ -94,6 +96,7 @@ export type Database = {
           main_pains?: string | null
           maturity_level?: string | null
           opportunity_mapping_id?: number
+          processed?: boolean
           updated_at?: string
         }
         Relationships: [
