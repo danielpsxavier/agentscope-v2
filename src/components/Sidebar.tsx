@@ -22,7 +22,7 @@ const menuItems = [
   },
   {
     name: 'Formulários',
-    path: '/formularios',
+    path: '/forms',
     icon: FileText,
   },
   {

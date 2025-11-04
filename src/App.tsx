@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 import ClientsPage from './pages/Clients'
 import ClientDetailPage from './pages/ClientDetail'
+import FormsPage from './pages/Forms'
 
 // ONLY IMPORT AND RENDER WORKING PAGES, NEVER ADD PLACEHOLDER COMPONENTS OR PAGES IN THIS FILE
 // AVOID REMOVING ANY CONTEXT PROVIDERS FROM THIS FILE (e.g. TooltipProvider, Toaster, Sonner)
@@ -25,6 +26,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES MUST BE ADDED HERE */}
           <Route path="/clientes" element={<ClientsPage />} />
           <Route path="/clientes/:clientId" element={<ClientDetailPage />} />
+          <Route path="/forms" element={<FormsPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
