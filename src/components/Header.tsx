@@ -5,9 +5,15 @@ type HeaderProps = {
   title: string
   subtitle: string
   buttonText: string
+  onButtonClick?: () => void
 }
 
-export const Header = ({ title, subtitle, buttonText }: HeaderProps) => {
+export const Header = ({
+  title,
+  subtitle,
+  buttonText,
+  onButtonClick,
+}: HeaderProps) => {
   return (
     <header className="flex items-center justify-between h-[88px]">
       <div>
@@ -16,7 +22,10 @@ export const Header = ({ title, subtitle, buttonText }: HeaderProps) => {
         </h1>
         <p className="text-sm text-neutral-textSecondary">{subtitle}</p>
       </div>
-      <Button className="primary-btn flex items-center gap-2.5">
+      <Button
+        className="primary-btn flex items-center gap-2.5"
+        onClick={onButtonClick}
+      >
         <Plus className="w-4 h-4" />
         <span>{buttonText}</span>
       </Button>

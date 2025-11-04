@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Header } from '@/components/Header'
 import {
   Card,
@@ -10,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { FileText, Eye } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { NewFormSheet } from '@/components/NewFormSheet'
 
 const forms = [
   {
@@ -31,6 +33,8 @@ const forms = [
 ]
 
 const FormsPage = () => {
+  const [isNewFormOpen, setIsNewFormOpen] = useState(false)
+
   return (
     <div className="p-lg">
       <div className="container mx-auto max-w-[1200px]">
@@ -38,6 +42,7 @@ const FormsPage = () => {
           title="Formulários"
           subtitle="Crie e gerencie seus formulários de mapeamento"
           buttonText="Novo Formulário"
+          onButtonClick={() => setIsNewFormOpen(true)}
         />
         <section className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
@@ -77,6 +82,7 @@ const FormsPage = () => {
           </div>
         </section>
       </div>
+      <NewFormSheet open={isNewFormOpen} onOpenChange={setIsNewFormOpen} />
     </div>
   )
 }
