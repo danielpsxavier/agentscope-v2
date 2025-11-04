@@ -1,10 +1,7 @@
-export type Client = {
-  id: string
-  name: string
-  department: string
+import { Tables } from '@/lib/supabase/types'
+
+export type Client = Tables<'clients'> & {
   leads: number
-  status: 'Alto' | 'Médio' | 'Baixo'
-  trend: 'Alta' | 'Média' | 'Baixa'
 }
 
 export type AIAnalysis = {

@@ -1,54 +1,87 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import { Header } from '@/components/Header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Client } from '@/types'
 import { OpportunityMappingForm } from '@/components/OpportunityMappingForm'
 import { Building, Users, BarChart, Rocket } from 'lucide-react'
-
-// Mock data - in a real app, this would come from an API
-const clients: Client[] = [
-  {
-    id: '1',
-    name: 'TechCorp Brasil',
-    department: 'Operações',
-    leads: 5,
-    status: 'Alto',
-    trend: 'Alta',
-  },
-  {
-    id: '2',
-    name: 'Indústria XYZ',
-    department: 'Vendas',
-    leads: 3,
-    status: 'Médio',
-    trend: 'Média',
-  },
-  {
-    id: '3',
-    name: 'Logística ABC',
-    department: 'Supply Chain',
-    leads: 2,
-    status: 'Baixo',
-    trend: 'Baixa',
-  },
-]
+import { getClientById } from '@/services/clients'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const ClientDetailPage = () => {
   const { clientId } = useParams<{ clientId: string }>()
+  const [client, setClient] = useState<Client | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [isFormOpen, setIsFormOpen] = useState(false)
 
-  // Find the client based on the ID from the URL
-  const client = clients.find((c) => c.id === clientId)
+  useEffect(() => {
+    if (!clientId) return
 
-  if (!client) {
+    const fetchClient = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const { data, error: fetchError } = await getClientById(
+          parseInt(clientId, 10),
+        )
+        if (fetchError) {
+          throw new Error('Failed to fetch client details.')
+        }
+        if (!data) {
+          throw new Error('Client not found.')
+        }
+        setClient(data)
+      } catch (err: any) {
+        setError(
+          'Cliente não encontrado ou ocorreu um erro ao buscar os dados.',
+        )
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchClient()
+  }, [clientId])
+
+  if (loading) {
+    return (
+      <div className="p-lg">
+        <div className="container mx-auto max-w-[1200px]">
+          <div className="flex items-center justify-between h-[88px]">
+            <div>
+              <Skeleton className="h-8 w-64 mb-2" />
+              <Skeleton className="h-4 w-80" />
+            </div>
+            <Skeleton className="h-11 w-44 rounded-card" />
+          </div>
+          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <Skeleton className="h-48 w-full rounded-lg" />
+            </div>
+            <div className="space-y-6">
+              <Skeleton className="h-64 w-full rounded-lg" />
+              <Skeleton className="h-11 w-full rounded-card" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !client) {
     return (
       <div className="p-lg text-center">
         <h2 className="text-h2">Cliente não encontrado</h2>
         <p className="text-neutral-textSecondary">
-          O cliente que você está procurando não existe ou foi movido.
+          {error ||
+            'O cliente que você está procurando não existe ou foi movido.'}
         </p>
+        <Button asChild className="mt-4">
+          <Link to="/clientes">Voltar para Clientes</Link>
+        </Button>
       </div>
     )
   }
@@ -60,6 +93,7 @@ const ClientDetailPage = () => {
           title={client.name}
           subtitle={`Detalhes e oportunidades para ${client.department}`}
           buttonText="Mapear Oportunidade"
+          onButtonClick={() => setIsFormOpen(true)}
         />
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -104,7 +138,10 @@ const ClientDetailPage = () => {
                 <div className="flex items-center gap-3">
                   <Rocket className="h-4 w-4 text-neutral-textSecondary" />
                   <span className="text-neutral-textPrimary">
-                    Potencial de tendência: {client.trend}
+                    Potencial de tendência:{' '}
+                    {client.trend_status === 'Media'
+                      ? 'Média'
+                      : client.trend_status}
                   </span>
                 </div>
               </CardContent>

@@ -5,19 +5,25 @@ import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
 import { Client } from '@/types'
 
-const statusStyles = {
+type Status = 'Alto' | 'Medio' | 'Baixo'
+type Trend = 'Alta' | 'Media' | 'Baixa'
+
+const statusStyles: Record<Status, { bg: string; text: string }> = {
   Alto: { bg: 'bg-[#EEF2FF]', text: 'text-[#3730A3]' },
-  Médio: { bg: 'bg-[#EFF6FF]', text: 'text-[#1E40AF]' },
+  Medio: { bg: 'bg-[#EFF6FF]', text: 'text-[#1E40AF]' },
   Baixo: { bg: 'bg-[#ECFDF5]', text: 'text-[#065F46]' },
 }
 
-const trendInfo = {
+const trendInfo: Record<
+  Trend,
+  { icon: React.ElementType; text: string; style: string }
+> = {
   Alta: {
     icon: Rocket,
     text: 'Potencial Alta',
     style: 'text-status-high bg-blue-100',
   },
-  Média: {
+  Media: {
     icon: Cog,
     text: 'Potencial Média',
     style: 'text-status-medium bg-blue-50',
@@ -30,9 +36,10 @@ const trendInfo = {
 }
 
 export const ClientCard = ({ client }: { client: Client }) => {
-  const { id, name, department, leads, status, trend } = client
-  const statusStyle = statusStyles[status]
-  const TrendIcon = trendInfo[trend].icon
+  const { id, name, department, leads, potential_status, trend_status } = client
+  const statusStyle = statusStyles[potential_status]
+  const currentTrendInfo = trendInfo[trend_status]
+  const TrendIcon = currentTrendInfo.icon
 
   return (
     <Card className="w-full max-w-[360px] min-w-[300px] shadow-soft border-neutral-border hover:shadow-card transition-shadow duration-200 flex flex-col">
@@ -58,7 +65,8 @@ export const ClientCard = ({ client }: { client: Client }) => {
                   statusStyle.text,
                 )}
               >
-                Status {status}
+                Status{' '}
+                {potential_status === 'Medio' ? 'Médio' : potential_status}
               </Badge>
             </div>
             <div className="mt-3 flex items-center gap-2 text-[13px] text-neutral-textPrimary">
@@ -72,11 +80,11 @@ export const ClientCard = ({ client }: { client: Client }) => {
         <div
           className={cn(
             'flex items-center gap-1.5 text-xs px-2 py-1 rounded-md font-medium',
-            trendInfo[trend].style,
+            currentTrendInfo.style,
           )}
         >
           <TrendIcon className="w-3.5 h-3.5" />
-          <span>{trendInfo[trend].text}</span>
+          <span>{currentTrendInfo.text}</span>
         </div>
         <Link
           to={`/clientes/${id}`}

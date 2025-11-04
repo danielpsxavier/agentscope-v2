@@ -5,8 +5,7 @@ import {
   opportunityMappingSchema,
   OpportunityMappingData,
 } from '@/schemas/opportunityMappingSchema'
-import { AIAnalysis } from '@/types'
-import { Client } from '@/types'
+import { AIAnalysis, Client } from '@/types'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import {
@@ -27,7 +26,7 @@ import { toast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react'
 
 interface OpportunityMappingFormProps {
-  client: Client
+  client: Pick<Client, 'name' | 'department'>
   open: boolean
   onOpenChange: (open: boolean) => void
 }
@@ -94,7 +93,7 @@ export const OpportunityMappingForm = ({
     resolver: zodResolver(opportunityMappingSchema),
     defaultValues: {
       clientName: client.name,
-      department: client.department,
+      department: client.department || '',
     },
   })
 
@@ -116,7 +115,7 @@ export const OpportunityMappingForm = ({
     if (!isOpen) {
       form.reset({
         clientName: client.name,
-        department: client.department,
+        department: client.department || '',
       })
       setAnalysis(null)
     }
