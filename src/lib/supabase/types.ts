@@ -180,10 +180,6 @@ export type Database = {
       }
       opportunity_mappings: {
         Row: {
-          additional_notes: string | null
-          agent_persona: string | null
-          agent_role: Database['public']['Enums']['agent_role_type'] | null
-          ai_usage: boolean | null
           bottlenecks: string | null
           budget: number | null
           business_objective: string | null
@@ -200,29 +196,16 @@ export type Database = {
           email_spreadsheet_activities: string | null
           expected_benefit: string | null
           expected_impact_percentage: number | null
-          experience_based_decisions: string | null
           id: number
-          initial_agent_ideas: string | null
-          interaction_channels: string | null
           main_systems_on_mapping: string | null
           main_user: string | null
-          multiple_data_sources: boolean | null
-          open_apis: boolean | null
           operation_size_on_mapping: string | null
           repetitive_tasks: string | null
-          request_types: string | null
           responsible_on_mapping: string | null
-          security_restrictions: string | null
           time_spent_today: string | null
-          unstructured_data: boolean | null
-          unstructured_data_details: string | null
           updated_at: string
         }
         Insert: {
-          additional_notes?: string | null
-          agent_persona?: string | null
-          agent_role?: Database['public']['Enums']['agent_role_type'] | null
-          ai_usage?: boolean | null
           bottlenecks?: string | null
           budget?: number | null
           business_objective?: string | null
@@ -239,29 +222,16 @@ export type Database = {
           email_spreadsheet_activities?: string | null
           expected_benefit?: string | null
           expected_impact_percentage?: number | null
-          experience_based_decisions?: string | null
           id?: number
-          initial_agent_ideas?: string | null
-          interaction_channels?: string | null
           main_systems_on_mapping?: string | null
           main_user?: string | null
-          multiple_data_sources?: boolean | null
-          open_apis?: boolean | null
           operation_size_on_mapping?: string | null
           repetitive_tasks?: string | null
-          request_types?: string | null
           responsible_on_mapping?: string | null
-          security_restrictions?: string | null
           time_spent_today?: string | null
-          unstructured_data?: boolean | null
-          unstructured_data_details?: string | null
           updated_at?: string
         }
         Update: {
-          additional_notes?: string | null
-          agent_persona?: string | null
-          agent_role?: Database['public']['Enums']['agent_role_type'] | null
-          ai_usage?: boolean | null
           bottlenecks?: string | null
           budget?: number | null
           business_objective?: string | null
@@ -278,22 +248,13 @@ export type Database = {
           email_spreadsheet_activities?: string | null
           expected_benefit?: string | null
           expected_impact_percentage?: number | null
-          experience_based_decisions?: string | null
           id?: number
-          initial_agent_ideas?: string | null
-          interaction_channels?: string | null
           main_systems_on_mapping?: string | null
           main_user?: string | null
-          multiple_data_sources?: boolean | null
-          open_apis?: boolean | null
           operation_size_on_mapping?: string | null
           repetitive_tasks?: string | null
-          request_types?: string | null
           responsible_on_mapping?: string | null
-          security_restrictions?: string | null
           time_spent_today?: string | null
-          unstructured_data?: boolean | null
-          unstructured_data_details?: string | null
           updated_at?: string
         }
         Relationships: [

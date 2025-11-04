@@ -4,6 +4,19 @@ import { OpportunityMappingData } from '@/schemas/opportunityMappingSchema'
 import { findClientByName, createClient } from './clients'
 
 /**
+ * Fetches all opportunity mappings from the database, ordered by creation date.
+ * @returns An object containing an array of mappings or null, and any potential error.
+ */
+export const getOpportunityMappings = async () => {
+  const { data, error } = await supabase
+    .from('opportunity_mappings')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  return { data, error }
+}
+
+/**
  * Creates an opportunity mapping, ensuring the associated client exists.
  * If the client does not exist, it creates one first.
  * @param formData - The data from the opportunity mapping form.
