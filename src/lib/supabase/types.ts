@@ -276,6 +276,7 @@ export type Database = {
           email: string
           id: number
           password_hash: string
+          profile_picture_url: string | null
           updated_at: string
           username: string
         }
@@ -284,6 +285,7 @@ export type Database = {
           email: string
           id?: number
           password_hash: string
+          profile_picture_url?: string | null
           updated_at?: string
           username: string
         }
@@ -292,6 +294,7 @@ export type Database = {
           email?: string
           id?: number
           password_hash?: string
+          profile_picture_url?: string | null
           updated_at?: string
           username?: string
         }
