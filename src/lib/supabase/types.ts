@@ -11,7 +11,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: '13.0.5'
   }
   public: {
     Tables: {
@@ -20,51 +20,51 @@ export type Database = {
           agent_name: string
           ai_analysis_id: number
           complexity:
-            | Database["public"]["Enums"]["agent_idea_complexity_type"]
+            | Database['public']['Enums']['agent_idea_complexity_type']
             | null
           created_at: string
           description: string | null
           expected_benefits: string | null
           id: number
           key_features: string | null
-          status: Database["public"]["Enums"]["agent_idea_status_type"]
+          status: Database['public']['Enums']['agent_idea_status_type']
           updated_at: string
         }
         Insert: {
           agent_name: string
           ai_analysis_id: number
           complexity?:
-            | Database["public"]["Enums"]["agent_idea_complexity_type"]
+            | Database['public']['Enums']['agent_idea_complexity_type']
             | null
           created_at?: string
           description?: string | null
           expected_benefits?: string | null
           id?: number
           key_features?: string | null
-          status?: Database["public"]["Enums"]["agent_idea_status_type"]
+          status?: Database['public']['Enums']['agent_idea_status_type']
           updated_at?: string
         }
         Update: {
           agent_name?: string
           ai_analysis_id?: number
           complexity?:
-            | Database["public"]["Enums"]["agent_idea_complexity_type"]
+            | Database['public']['Enums']['agent_idea_complexity_type']
             | null
           created_at?: string
           description?: string | null
           expected_benefits?: string | null
           id?: number
           key_features?: string | null
-          status?: Database["public"]["Enums"]["agent_idea_status_type"]
+          status?: Database['public']['Enums']['agent_idea_status_type']
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "agent_ideas_ai_analysis_id_fkey"
-            columns: ["ai_analysis_id"]
+            foreignKeyName: 'agent_ideas_ai_analysis_id_fkey'
+            columns: ['ai_analysis_id']
             isOneToOne: false
-            referencedRelation: "ai_analyses"
-            referencedColumns: ["id"]
+            referencedRelation: 'ai_analyses'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -98,11 +98,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "ai_analyses_opportunity_mapping_id_fkey"
-            columns: ["opportunity_mapping_id"]
+            foreignKeyName: 'ai_analyses_opportunity_mapping_id_fkey'
+            columns: ['opportunity_mapping_id']
             isOneToOne: true
-            referencedRelation: "opportunity_mappings"
-            referencedColumns: ["id"]
+            referencedRelation: 'opportunity_mappings'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -115,9 +115,9 @@ export type Database = {
           main_systems: string | null
           name: string
           operation_size: string | null
-          potential_status: Database["public"]["Enums"]["client_potential_status"]
+          potential_status: Database['public']['Enums']['client_potential_status']
           responsible: string | null
-          trend_status: Database["public"]["Enums"]["client_trend_status"]
+          trend_status: Database['public']['Enums']['client_trend_status']
           updated_at: string
         }
         Insert: {
@@ -128,9 +128,9 @@ export type Database = {
           main_systems?: string | null
           name: string
           operation_size?: string | null
-          potential_status?: Database["public"]["Enums"]["client_potential_status"]
+          potential_status?: Database['public']['Enums']['client_potential_status']
           responsible?: string | null
-          trend_status?: Database["public"]["Enums"]["client_trend_status"]
+          trend_status?: Database['public']['Enums']['client_trend_status']
           updated_at?: string
         }
         Update: {
@@ -141,9 +141,9 @@ export type Database = {
           main_systems?: string | null
           name?: string
           operation_size?: string | null
-          potential_status?: Database["public"]["Enums"]["client_potential_status"]
+          potential_status?: Database['public']['Enums']['client_potential_status']
           responsible?: string | null
-          trend_status?: Database["public"]["Enums"]["client_trend_status"]
+          trend_status?: Database['public']['Enums']['client_trend_status']
           updated_at?: string
         }
         Relationships: []
@@ -182,14 +182,14 @@ export type Database = {
         Row: {
           additional_notes: string | null
           agent_persona: string | null
-          agent_role: Database["public"]["Enums"]["agent_role_type"] | null
+          agent_role: Database['public']['Enums']['agent_role_type'] | null
           ai_usage: boolean | null
           bottlenecks: string | null
           budget: number | null
           business_objective: string | null
           client_id: number
           client_interest_level:
-            | Database["public"]["Enums"]["client_interest_level_type"]
+            | Database['public']['Enums']['client_interest_level_type']
             | null
           client_name_on_mapping: string
           created_at: string
@@ -221,14 +221,14 @@ export type Database = {
         Insert: {
           additional_notes?: string | null
           agent_persona?: string | null
-          agent_role?: Database["public"]["Enums"]["agent_role_type"] | null
+          agent_role?: Database['public']['Enums']['agent_role_type'] | null
           ai_usage?: boolean | null
           bottlenecks?: string | null
           budget?: number | null
           business_objective?: string | null
           client_id: number
           client_interest_level?:
-            | Database["public"]["Enums"]["client_interest_level_type"]
+            | Database['public']['Enums']['client_interest_level_type']
             | null
           client_name_on_mapping: string
           created_at?: string
@@ -260,14 +260,14 @@ export type Database = {
         Update: {
           additional_notes?: string | null
           agent_persona?: string | null
-          agent_role?: Database["public"]["Enums"]["agent_role_type"] | null
+          agent_role?: Database['public']['Enums']['agent_role_type'] | null
           ai_usage?: boolean | null
           bottlenecks?: string | null
           budget?: number | null
           business_objective?: string | null
           client_id?: number
           client_interest_level?:
-            | Database["public"]["Enums"]["client_interest_level_type"]
+            | Database['public']['Enums']['client_interest_level_type']
             | null
           client_name_on_mapping?: string
           created_at?: string
@@ -298,11 +298,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "opportunity_mappings_client_id_fkey"
-            columns: ["client_id"]
+            foreignKeyName: 'opportunity_mappings_client_id_fkey'
+            columns: ['client_id']
             isOneToOne: false
-            referencedRelation: "clients"
-            referencedColumns: ["id"]
+            referencedRelation: 'clients'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -314,16 +314,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      agent_idea_complexity_type: "Baixa" | "Media" | "Alta"
+      agent_idea_complexity_type: 'Baixa' | 'Media' | 'Alta'
       agent_idea_status_type:
-        | "Rascunho"
-        | "Aprovado"
-        | "Rejeitado"
-        | "Implementado"
-      agent_role_type: "responder" | "executar"
-      client_interest_level_type: "Alto" | "Medio" | "Baixo"
-      client_potential_status: "Alto" | "Medio" | "Baixo"
-      client_trend_status: "Alta" | "Media" | "Baixa"
+        | 'Rascunho'
+        | 'Aprovado'
+        | 'Rejeitado'
+        | 'Implementado'
+      agent_role_type: 'responder' | 'executar'
+      client_interest_level_type: 'Alto' | 'Medio' | 'Baixo'
+      client_potential_status: 'Alto' | 'Medio' | 'Baixo'
+      client_trend_status: 'Alta' | 'Media' | 'Baixa'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -331,33 +331,33 @@ export type Database = {
   }
 }
 
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>
 
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, 'public'>]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
-    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])
+    ? (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -366,23 +366,23 @@ export type Tables<
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
+    | keyof DefaultSchema['Tables']
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -391,23 +391,23 @@ export type TablesInsert<
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
+    | keyof DefaultSchema['Tables']
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -416,53 +416,52 @@ export type TablesUpdate<
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
+    | keyof DefaultSchema['Enums']
     | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
     : never = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
-    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
+    ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof DefaultSchema["CompositeTypes"]
+    | keyof DefaultSchema['CompositeTypes']
     | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
-    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
+    ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never
 
 export const Constants = {
   public: {
     Enums: {
-      agent_idea_complexity_type: ["Baixa", "Media", "Alta"],
+      agent_idea_complexity_type: ['Baixa', 'Media', 'Alta'],
       agent_idea_status_type: [
-        "Rascunho",
-        "Aprovado",
-        "Rejeitado",
-        "Implementado",
+        'Rascunho',
+        'Aprovado',
+        'Rejeitado',
+        'Implementado',
       ],
-      agent_role_type: ["responder", "executar"],
-      client_interest_level_type: ["Alto", "Medio", "Baixo"],
-      client_potential_status: ["Alto", "Medio", "Baixo"],
-      client_trend_status: ["Alta", "Media", "Baixa"],
+      agent_role_type: ['responder', 'executar'],
+      client_interest_level_type: ['Alto', 'Medio', 'Baixo'],
+      client_potential_status: ['Alto', 'Medio', 'Baixo'],
+      client_trend_status: ['Alta', 'Media', 'Baixa'],
     },
   },
 } as const
-
