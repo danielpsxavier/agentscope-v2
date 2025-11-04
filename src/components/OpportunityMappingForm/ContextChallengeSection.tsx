@@ -56,22 +56,6 @@ export const ContextChallengeSection = ({
       />
       <FormField
         control={form.control}
-        name="experienceBasedDecisions"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Decisões que dependem de experiência</FormLabel>
-            <FormControl>
-              <Textarea
-                placeholder="Ex: análise de crédito, aprovação de propostas..."
-                {...field}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
         name="emailSpreadsheetActivities"
         render={({ field }) => (
           <FormItem>
@@ -97,22 +81,6 @@ export const ContextChallengeSection = ({
             <FormControl>
               <Textarea
                 placeholder="Onde o processo costuma parar ou precisar de refação?"
-                {...field}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="multipleDataSources"
-        render={({ field }) => (
-          <FormItem className="md:col-span-2">
-            <FormLabel>Processos que dependem de múltiplas fontes</FormLabel>
-            <FormControl>
-              <Textarea
-                placeholder="Descreva processos que exigem consulta a vários sistemas, documentos ou pessoas."
                 {...field}
               />
             </FormControl>

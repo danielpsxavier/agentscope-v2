@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { FormSection } from './FormSection'
 
 interface FinalObservationsSectionProps {
@@ -26,41 +25,9 @@ export const FinalObservationsSection = ({
 }: FinalObservationsSectionProps) => {
   return (
     <FormSection
-      title="6️⃣ Observações Finais"
+      title="4️⃣ Observações Finais"
       description="Notas e percepções finais sobre a oportunidade."
     >
-      <FormField
-        control={form.control}
-        name="additionalNotes"
-        render={({ field }) => (
-          <FormItem className="md:col-span-2">
-            <FormLabel>Notas adicionais da imersão</FormLabel>
-            <FormControl>
-              <Textarea
-                placeholder="Qualquer outra informação relevante coletada..."
-                {...field}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="initialAgentIdeas"
-        render={({ field }) => (
-          <FormItem className="md:col-span-2">
-            <FormLabel>Ideias iniciais de agentes</FormLabel>
-            <FormControl>
-              <Textarea
-                placeholder="Brainstorm inicial de possíveis agentes ou soluções."
-                {...field}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
       <FormField
         control={form.control}
         name="clientInterestLevel"

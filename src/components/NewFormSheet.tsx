@@ -19,8 +19,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { GeneralDataSection } from './OpportunityMappingForm/GeneralDataSection'
 import { ContextChallengeSection } from './OpportunityMappingForm/ContextChallengeSection'
 import { ProcessesToolsSection } from './OpportunityMappingForm/ProcessesToolsSection'
-import { InteractionsUsersSection } from './OpportunityMappingForm/InteractionsUsersSection'
-import { ExpectedValueSection } from './OpportunityMappingForm/ExpectedValueSection'
 import { FinalObservationsSection } from './OpportunityMappingForm/FinalObservationsSection'
 import { toast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react'
@@ -40,30 +38,9 @@ const defaultFormValues: OpportunityMappingData = {
   mainSystems: '',
   businessObjective: '',
   repetitiveTasks: '',
-  experienceBasedDecisions: '',
   emailSpreadsheetActivities: '',
   bottlenecks: '',
-  multipleDataSources: '',
   criticalSystems: '',
-  hasOpenAPIs: 'Não',
-  unstructuredData: {
-    relevant: 'Não',
-    details: '',
-  },
-  securityRestrictions: '',
-  usesAITools: 'Não',
-  mainUser: '',
-  interactionChannels: [],
-  agentRole: 'Apenas Responder',
-  requestTypes: '',
-  agentPersona: '',
-  expectedBenefit: '',
-  timeSpentToday: undefined,
-  expectedImpact: undefined,
-  hasBudget: 'Não',
-  deadline: undefined,
-  additionalNotes: '',
-  initialAgentIdeas: '',
   clientInterestLevel: 'Médio',
 }
 
@@ -130,8 +107,6 @@ export const NewFormSheet = ({ open, onOpenChange }: NewFormSheetProps) => {
                 <GeneralDataSection form={form} />
                 <ContextChallengeSection form={form} />
                 <ProcessesToolsSection form={form} />
-                <InteractionsUsersSection form={form} />
-                <ExpectedValueSection form={form} />
                 <FinalObservationsSection form={form} />
               </form>
             </Form>

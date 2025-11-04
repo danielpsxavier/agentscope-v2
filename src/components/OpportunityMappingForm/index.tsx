@@ -6,7 +6,7 @@ import {
   OpportunityMappingData,
 } from '@/schemas/opportunityMappingSchema'
 import { AIAnalysis } from '@/types'
-import { Client } from '@/components/ClientCard'
+import { Client } from '@/types'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,8 +21,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { GeneralDataSection } from './GeneralDataSection'
 import { ContextChallengeSection } from './ContextChallengeSection'
 import { ProcessesToolsSection } from './ProcessesToolsSection'
-import { InteractionsUsersSection } from './InteractionsUsersSection'
-import { ExpectedValueSection } from './ExpectedValueSection'
 import { FinalObservationsSection } from './FinalObservationsSection'
 import { AIAnalysisDisplay } from '@/components/AIAnalysisDisplay'
 import { toast } from '@/components/ui/use-toast'
@@ -97,7 +95,6 @@ export const OpportunityMappingForm = ({
     defaultValues: {
       clientName: client.name,
       department: client.department,
-      interactionChannels: [],
     },
   })
 
@@ -120,7 +117,6 @@ export const OpportunityMappingForm = ({
       form.reset({
         clientName: client.name,
         department: client.department,
-        interactionChannels: [],
       })
       setAnalysis(null)
     }
@@ -151,8 +147,6 @@ export const OpportunityMappingForm = ({
                   <GeneralDataSection form={form} />
                   <ContextChallengeSection form={form} />
                   <ProcessesToolsSection form={form} />
-                  <InteractionsUsersSection form={form} />
-                  <ExpectedValueSection form={form} />
                   <FinalObservationsSection form={form} />
                 </form>
               </Form>

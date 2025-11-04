@@ -61,30 +61,9 @@ export const createOpportunityMappingWithClientCheck = async (
     main_systems_on_mapping: formData.mainSystems,
     business_objective: formData.businessObjective,
     repetitive_tasks: formData.repetitiveTasks,
-    experience_based_decisions: formData.experienceBasedDecisions,
     email_spreadsheet_activities: formData.emailSpreadsheetActivities,
     bottlenecks: formData.bottlenecks,
-    multiple_data_sources:
-      formData.multipleDataSources?.toLowerCase().includes('sim') ?? null,
     critical_systems: formData.criticalSystems,
-    open_apis: formData.hasOpenAPIs === 'Sim',
-    ai_usage: formData.usesAITools === 'Sim',
-    unstructured_data: formData.unstructuredData.relevant === 'Sim',
-    unstructured_data_details: formData.unstructuredData.details,
-    security_restrictions: formData.securityRestrictions,
-    main_user: formData.mainUser,
-    agent_role:
-      formData.agentRole === 'Executar Ações' ? 'executar' : 'responder',
-    interaction_channels: JSON.stringify(formData.interactionChannels),
-    request_types: formData.requestTypes,
-    agent_persona: formData.agentPersona,
-    expected_benefit: formData.expectedBenefit,
-    budget: formData.hasBudget === 'Sim' ? 1 : 0,
-    time_spent_today: formData.timeSpentToday?.toString(),
-    expected_impact_percentage: formData.expectedImpact,
-    deadline_goal: formData.deadline ? formData.deadline.toISOString() : null,
-    additional_notes: formData.additionalNotes,
-    initial_agent_ideas: formData.initialAgentIdeas,
     client_interest_level: (() => {
       switch (formData.clientInterestLevel) {
         case 'Muito Alto':
