@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase/client'
 import { AgentIdea, AgentIdeasSummary } from '@/types'
+import { AgentIdeaData } from '@/schemas/agentIdeaSchema'
 
 /**
  * Invokes the Supabase Edge Function to process pending AI analyses.
@@ -97,4 +98,29 @@ export const getAgentIdeasSummary = async (): Promise<{
     console.error('Error fetching agent ideas summary:', error)
     return { data: null, error }
   }
+}
+
+/**
+ * Updates an existing agent idea in the database.
+ * @param ideaData - The data to update, including the idea ID.
+ * @returns An object containing the updated agent idea data or null, and any potential error.
+ */
+export const updateAgentIdea = async (
+  ideaData: AgentIdeaData,
+): Promise<{ data: AgentIdea | null; error: any }> => {
+  const { id, ...updateData } = ideaData
+
+  const { data, error } = await supabase
+    .from('agent_ideas')
+    .update(updateData)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) {
+    console.error(`Error updating agent idea ${id}:`, error)
+    return { data: null, error }
+  }
+
+  return { data: data as AgentIdea, error: null }
 }

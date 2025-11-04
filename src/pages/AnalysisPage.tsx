@@ -9,12 +9,15 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Bot, AlertTriangle, RefreshCw } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
+import { EditAgentIdeaSheet } from '@/components/EditAgentIdeaSheet'
 
 const AnalysisPage = () => {
   const [ideas, setIdeas] = useState<AgentIdea[]>([])
   const [loading, setLoading] = useState(true)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [editingIdea, setEditingIdea] = useState<AgentIdea | null>(null)
+  const [isEditSheetOpen, setIsEditSheetOpen] = useState(false)
 
   const fetchIdeas = useCallback(async (showLoading = true) => {
     if (showLoading) setLoading(true)
@@ -33,13 +36,10 @@ const AnalysisPage = () => {
 
   useEffect(() => {
     fetchIdeas()
-    const interval = setInterval(() => fetchIdeas(false), 30000)
-    return () => clearInterval(interval)
   }, [fetchIdeas])
 
   const handleAnalyze = () => {
     setIsAnalyzing(true)
-
     const promise = invokeAnalysisFunction().then((result) => {
       if (result.error) {
         throw new Error(result.error.message || 'Ocorreu um erro na análise.')
@@ -54,10 +54,19 @@ const AnalysisPage = () => {
         return data.message || 'Análise concluída com sucesso!'
       },
       error: (err) => err.message || 'Erro na análise. Tente novamente.',
-      finally: () => {
-        setIsAnalyzing(false)
-      },
+      finally: () => setIsAnalyzing(false),
     })
+  }
+
+  const handleEdit = (idea: AgentIdea) => {
+    setEditingIdea(idea)
+    setIsEditSheetOpen(true)
+  }
+
+  const handleUpdateSuccess = () => {
+    setIsEditSheetOpen(false)
+    fetchIdeas(false)
+    toast.success('Ideia de agente atualizada com sucesso!')
   }
 
   const renderContent = () => {
@@ -99,7 +108,7 @@ const AnalysisPage = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
         {ideas.map((idea) => (
-          <AgentIdeaCard key={idea.id} idea={idea} />
+          <AgentIdeaCard key={idea.id} idea={idea} onEdit={handleEdit} />
         ))}
       </div>
     )
@@ -136,6 +145,14 @@ const AnalysisPage = () => {
           {renderContent()}
         </section>
       </div>
+      {editingIdea && (
+        <EditAgentIdeaSheet
+          idea={editingIdea}
+          open={isEditSheetOpen}
+          onOpenChange={setIsEditSheetOpen}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
+      )}
     </div>
   )
 }
@@ -159,8 +176,8 @@ const CardSkeleton = () => (
       <Skeleton className="h-3 w-5/6" />
     </div>
     <div className="pt-3 border-t flex justify-between items-center">
-      <Skeleton className="h-4 w-24" />
-      <Skeleton className="h-6 w-20 rounded-md" />
+      <Skeleton className="h-6 w-28 rounded-md" />
+      <Skeleton className="h-8 w-8 rounded-md" />
     </div>
   </div>
 )

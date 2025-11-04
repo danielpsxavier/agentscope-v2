@@ -7,12 +7,14 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Bot, CheckCircle, Tag, BarChart, Briefcase } from 'lucide-react'
+import { Bot, CheckCircle, Tag, BarChart, Briefcase, Edit } from 'lucide-react'
 import { AgentIdea } from '@/types'
 import { cn } from '@/lib/utils'
+import { Button } from './ui/button'
 
 interface AgentIdeaCardProps {
   idea: AgentIdea
+  onEdit: (idea: AgentIdea) => void
 }
 
 const complexityStyles = {
@@ -39,7 +41,7 @@ const parseJsonString = (jsonString: string | null): string[] => {
   }
 }
 
-export const AgentIdeaCard = ({ idea }: AgentIdeaCardProps) => {
+export const AgentIdeaCard = ({ idea, onEdit }: AgentIdeaCardProps) => {
   const clientName =
     idea.ai_analyses?.opportunity_mappings?.client_name_on_mapping
   const department =
@@ -108,15 +110,24 @@ export const AgentIdeaCard = ({ idea }: AgentIdeaCardProps) => {
         <div className="flex items-center gap-2">
           <BarChart className="w-3.5 h-3.5" />
           <span>Status:</span>
+          <Badge
+            className={cn(
+              'text-xs font-medium rounded-md px-2 py-0.5 border',
+              statusStyles[idea.status],
+            )}
+          >
+            {idea.status}
+          </Badge>
         </div>
-        <Badge
-          className={cn(
-            'text-xs font-medium rounded-md px-2 py-0.5 border',
-            statusStyles[idea.status],
-          )}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => onEdit(idea)}
         >
-          {idea.status}
-        </Badge>
+          <Edit className="w-4 h-4" />
+          <span className="sr-only">Editar Ideia</span>
+        </Button>
       </CardFooter>
     </Card>
   )
