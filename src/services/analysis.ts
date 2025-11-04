@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase/client'
-import { AgentIdea } from '@/types'
+import { AgentIdea, AgentIdeasSummary } from '@/types'
 
 /**
  * Invokes the Supabase Edge Function to process pending AI analyses.
@@ -44,4 +44,57 @@ export const getAgentIdeas = async (): Promise<{
   }
 
   return { data: data as AgentIdea[], error: null }
+}
+
+/**
+ * Fetches a summary of agent ideas counts by status.
+ * @returns An object containing the summary data or null, and any potential error.
+ */
+export const getAgentIdeasSummary = async (): Promise<{
+  data: AgentIdeasSummary | null
+  error: any
+}> => {
+  try {
+    const [totalRes, draftRes, approvedRes, rejectedRes, implementedRes] =
+      await Promise.all([
+        supabase
+          .from('agent_ideas')
+          .select('*', { count: 'exact', head: true }),
+        supabase
+          .from('agent_ideas')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'Rascunho'),
+        supabase
+          .from('agent_ideas')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'Aprovado'),
+        supabase
+          .from('agent_ideas')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'Rejeitado'),
+        supabase
+          .from('agent_ideas')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'Implementado'),
+      ])
+
+    if (totalRes.error) throw totalRes.error
+    if (draftRes.error) throw draftRes.error
+    if (approvedRes.error) throw approvedRes.error
+    if (rejectedRes.error) throw rejectedRes.error
+    if (implementedRes.error) throw implementedRes.error
+
+    const summary: AgentIdeasSummary = {
+      total: totalRes.count ?? 0,
+      draft: draftRes.count ?? 0,
+      approved: approvedRes.count ?? 0,
+      rejected: rejectedRes.count ?? 0,
+      implemented: implementedRes.count ?? 0,
+    }
+
+    return { data: summary, error: null }
+  } catch (error) {
+    console.error('Error fetching agent ideas summary:', error)
+    return { data: null, error }
+  }
 }

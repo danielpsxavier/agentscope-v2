@@ -28,3 +28,11 @@ export type AgentIdea = Tables<'agent_ideas'> & {
     } | null
   } | null
 }
+
+export type AgentIdeasSummary = {
+  total: number
+  draft: number
+  approved: number
+  rejected: number
+  implemented: number
+}

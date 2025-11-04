@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Header } from '@/components/Header'
 import { MetricCard } from '@/components/MetricCard'
 import { ClientCard } from '@/components/ClientCard'
+import { AgentIdeasSummary } from '@/components/AgentIdeasSummary'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -11,22 +12,34 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Search, Briefcase, Zap, BarChart, Rocket } from 'lucide-react'
-import { Client } from '@/types'
+import { Client, AgentIdeasSummary as AgentIdeasSummaryType } from '@/types'
 import { getClients } from '@/services/clients'
+import { getAgentIdeasSummary } from '@/services/analysis'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const Index = () => {
   const [clients, setClients] = useState<Client[]>([])
-  const [loading, setLoading] = useState(true)
+  const [clientsLoading, setClientsLoading] = useState(true)
+  const [summary, setSummary] = useState<AgentIdeasSummaryType | null>(null)
+  const [summaryLoading, setSummaryLoading] = useState(true)
 
   useEffect(() => {
-    const fetchClients = async () => {
-      setLoading(true)
-      const { data } = await getClients()
-      setClients(data || [])
-      setLoading(false)
+    const fetchData = async () => {
+      setClientsLoading(true)
+      setSummaryLoading(true)
+
+      const [clientsResult, summaryResult] = await Promise.all([
+        getClients(),
+        getAgentIdeasSummary(),
+      ])
+
+      setClients(clientsResult.data || [])
+      setClientsLoading(false)
+
+      setSummary(summaryResult.data || null)
+      setSummaryLoading(false)
     }
-    fetchClients()
+    fetchData()
   }, [])
 
   const highPotentialPercentage =
@@ -50,14 +63,14 @@ const Index = () => {
         <div className="grid gap-md grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
           <MetricCard
             title="Clientes Mapeados"
-            value={loading ? '...' : clients.length.toString()}
+            value={clientsLoading ? '...' : clients.length.toString()}
             trend="+2 este mês"
             icon={<Briefcase className="h-4 w-4 text-neutral-textSecondary" />}
           />
           <MetricCard
             title="Leads de Projeto"
             value={
-              loading
+              clientsLoading
                 ? '...'
                 : clients.reduce((acc, c) => acc + c.leads, 0).toString()
             }
@@ -66,7 +79,7 @@ const Index = () => {
           />
           <MetricCard
             title="Potencial Alto"
-            value={loading ? '...' : `${highPotentialPercentage}%`}
+            value={clientsLoading ? '...' : `${highPotentialPercentage}%`}
             trend="Estável"
             trendColor="text-neutral-textSecondary"
             icon={<Rocket className="h-4 w-4 text-neutral-textSecondary" />}
@@ -101,25 +114,32 @@ const Index = () => {
           </Select>
         </div>
 
-        <section className="mt-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-h3 text-neutral-textPrimary">Clientes</h3>
-            {!loading && (
-              <span className="text-sm text-neutral-textSecondary">
-                {clients.length} clientes
-              </span>
-            )}
+        <section className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-h3 text-neutral-textPrimary">
+                Clientes Recentes
+              </h3>
+              {!clientsLoading && (
+                <span className="text-sm text-neutral-textSecondary">
+                  {clients.length} clientes no total
+                </span>
+              )}
+            </div>
+            <div className="flex flex-wrap gap-md">
+              {clientsLoading
+                ? Array.from({ length: 2 }).map((_, index) => (
+                    <CardSkeleton key={index} />
+                  ))
+                : clients
+                    .slice(0, 2)
+                    .map((client) => (
+                      <ClientCard key={client.id} client={client} />
+                    ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-md">
-            {loading
-              ? Array.from({ length: 3 }).map((_, index) => (
-                  <CardSkeleton key={index} />
-                ))
-              : clients
-                  .slice(0, 3)
-                  .map((client) => (
-                    <ClientCard key={client.id} client={client} />
-                  ))}
+          <div className="lg:col-span-1">
+            <AgentIdeasSummary summary={summary} loading={summaryLoading} />
           </div>
         </section>
       </div>
