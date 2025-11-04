@@ -41,10 +41,10 @@ BEGIN
 
         -- Insert a corresponding entry into the auth.identities table.
         -- This links the user record to the email identity provider.
-        INSERT INTO auth.identities (id, user_id, identity_data, provider, created_at, updated_at)
+        INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
         VALUES
         (
-            uuid_generate_v4(),
+            user_email,
             user_id,
             jsonb_build_object('sub', user_id::text, 'email', user_email),
             'email',
