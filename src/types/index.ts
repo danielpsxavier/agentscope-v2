@@ -36,3 +36,7 @@ export type AgentIdeasSummary = {
   rejected: number
   implemented: number
 }
+
+export type Opportunity = Tables<'ai_analyses'> & {
+  opportunity_mappings: Tables<'opportunity_mappings'> | null
+}

@@ -2,10 +2,10 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard,
   Users,
-  FileText,
   BarChart2,
   Settings,
   Bot,
+  Lightbulb,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -21,9 +21,9 @@ const menuItems = [
     icon: Users,
   },
   {
-    name: 'Formulários',
-    path: '/forms',
-    icon: FileText,
+    name: 'Oportunidades',
+    path: '/oportunidades',
+    icon: Lightbulb,
   },
   {
     name: 'Análises',

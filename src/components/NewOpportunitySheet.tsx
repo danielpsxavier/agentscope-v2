@@ -24,7 +24,7 @@ import { toast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react'
 import { createOpportunityMappingWithClientCheck } from '@/services/opportunityMappings'
 
-interface NewFormSheetProps {
+interface NewOpportunitySheetProps {
   open: boolean
   onOpenChange: (open: boolean) => void
 }
@@ -44,7 +44,10 @@ const defaultFormValues: OpportunityMappingData = {
   clientInterestLevel: 'Médio',
 }
 
-export const NewFormSheet = ({ open, onOpenChange }: NewFormSheetProps) => {
+export const NewOpportunitySheet = ({
+  open,
+  onOpenChange,
+}: NewOpportunitySheetProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<OpportunityMappingData>({
@@ -62,7 +65,7 @@ export const NewFormSheet = ({ open, onOpenChange }: NewFormSheetProps) => {
       }
 
       toast({
-        title: 'Formulário Salvo!',
+        title: 'Oportunidade Salva!',
         description:
           'O novo mapeamento de oportunidade foi criado com sucesso.',
       })
@@ -73,7 +76,7 @@ export const NewFormSheet = ({ open, onOpenChange }: NewFormSheetProps) => {
         variant: 'destructive',
         title: 'Erro ao Salvar',
         description:
-          'Ocorreu um erro ao salvar o formulário. Verifique os dados e tente novamente.',
+          'Ocorreu um erro ao salvar a oportunidade. Verifique os dados e tente novamente.',
       })
     } finally {
       setIsSubmitting(false)
@@ -91,7 +94,7 @@ export const NewFormSheet = ({ open, onOpenChange }: NewFormSheetProps) => {
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent className="w-full sm:max-w-3xl">
         <SheetHeader>
-          <SheetTitle>Novo Formulário de Mapeamento</SheetTitle>
+          <SheetTitle>Nova Oportunidade</SheetTitle>
           <SheetDescription>
             Preencha as informações abaixo para criar um novo mapeamento de
             oportunidade.

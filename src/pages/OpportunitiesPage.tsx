@@ -1,32 +1,32 @@
 import { useState, useEffect } from 'react'
 import { Header } from '@/components/Header'
-import { NewFormSheet } from '@/components/NewFormSheet'
-import { getOpportunityMappings } from '@/services/opportunityMappings'
-import { Tables } from '@/lib/supabase/types'
-import { OpportunityMappingCard } from '@/components/OpportunityMappingCard'
+import { NewOpportunitySheet } from '@/components/NewOpportunitySheet'
+import { getOpportunities } from '@/services/opportunities'
+import { Opportunity } from '@/types'
+import { OpportunityCard } from '@/components/OpportunityCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { FileX, AlertTriangle } from 'lucide-react'
 
-const FormsPage = () => {
-  const [isNewFormOpen, setIsNewFormOpen] = useState(false)
-  const [mappings, setMappings] = useState<Tables<'opportunity_mappings'>[]>([])
+const OpportunitiesPage = () => {
+  const [isNewSheetOpen, setIsNewSheetOpen] = useState(false)
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchMappings = async () => {
+    const fetchOpportunities = async () => {
       setLoading(true)
       setError(null)
       try {
-        const { data, error: fetchError } = await getOpportunityMappings()
+        const { data, error: fetchError } = await getOpportunities()
         if (fetchError) {
           throw new Error(fetchError.message)
         }
-        setMappings(data || [])
+        setOpportunities(data || [])
       } catch (err: any) {
         setError(
-          'Falha ao carregar os formulários. Tente novamente mais tarde.',
+          'Falha ao carregar as oportunidades. Tente novamente mais tarde.',
         )
         console.error(err)
       } finally {
@@ -34,7 +34,7 @@ const FormsPage = () => {
       }
     }
 
-    fetchMappings()
+    fetchOpportunities()
   }, [])
 
   const renderContent = () => {
@@ -71,16 +71,16 @@ const FormsPage = () => {
       )
     }
 
-    if (mappings.length === 0) {
+    if (opportunities.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center text-center py-16 border-2 border-dashed border-neutral-border rounded-lg">
           <FileX className="w-12 h-12 text-neutral-textSecondary mb-4" />
           <h3 className="text-h3 text-neutral-textPrimary">
-            Nenhum Formulário Encontrado
+            Nenhuma Oportunidade Encontrada
           </h3>
           <p className="text-neutral-textSecondary mt-2">
-            Ainda não há mapeamentos de oportunidade. Clique em "Novo
-            Formulário" para criar o primeiro.
+            Ainda não há mapeamentos de oportunidade. Clique em "Nova
+            Oportunidade" para criar a primeira.
           </p>
         </div>
       )
@@ -88,8 +88,8 @@ const FormsPage = () => {
 
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
-        {mappings.map((mapping) => (
-          <OpportunityMappingCard key={mapping.id} mapping={mapping} />
+        {opportunities.map((opportunity) => (
+          <OpportunityCard key={opportunity.id} opportunity={opportunity} />
         ))}
       </div>
     )
@@ -99,16 +99,19 @@ const FormsPage = () => {
     <div className="p-lg">
       <div className="container mx-auto max-w-[1200px]">
         <Header
-          title="Formulários"
-          subtitle="Visualize os mapeamentos de oportunidade preenchidos"
-          buttonText="Novo Formulário"
-          onButtonClick={() => setIsNewFormOpen(true)}
+          title="Oportunidades"
+          subtitle="Visualize os mapeamentos de oportunidade e seu status de processamento"
+          buttonText="Nova Oportunidade"
+          onButtonClick={() => setIsNewSheetOpen(true)}
         />
         <section className="mt-6">{renderContent()}</section>
       </div>
-      <NewFormSheet open={isNewFormOpen} onOpenChange={setIsNewFormOpen} />
+      <NewOpportunitySheet
+        open={isNewSheetOpen}
+        onOpenChange={setIsNewSheetOpen}
+      />
     </div>
   )
 }
 
-export default FormsPage
+export default OpportunitiesPage

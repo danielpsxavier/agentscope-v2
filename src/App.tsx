@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 import ClientsPage from './pages/Clients'
 import ClientDetailPage from './pages/ClientDetail'
-import FormsPage from './pages/Forms'
+import OpportunitiesPage from './pages/OpportunitiesPage'
 import AnalysisPage from './pages/AnalysisPage'
 
 const App = () => (
@@ -25,7 +25,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/clientes" element={<ClientsPage />} />
             <Route path="/clientes/:clientId" element={<ClientDetailPage />} />
-            <Route path="/forms" element={<FormsPage />} />
+            <Route path="/oportunidades" element={<OpportunitiesPage />} />
             <Route path="/analises" element={<AnalysisPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
