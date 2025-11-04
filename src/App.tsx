@@ -1,16 +1,14 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AuthProvider } from '@/hooks/use-auth'
-import { ProtectedRoute } from '@/components/ProtectedRoute'
 import Index from './pages/Index'
 import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 import ClientsPage from './pages/Clients'
 import ClientDetailPage from './pages/ClientDetail'
 import FormsPage from './pages/Forms'
-import LoginPage from './pages/Login'
 
 const App = () => (
   <BrowserRouter
@@ -21,17 +19,12 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route element={<ProtectedRoute />}>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/clientes" element={<ClientsPage />} />
-              <Route
-                path="/clientes/:clientId"
-                element={<ClientDetailPage />}
-              />
-              <Route path="/forms" element={<FormsPage />} />
-            </Route>
+          <Route path="/login" element={<Navigate to="/" replace />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/clientes" element={<ClientsPage />} />
+            <Route path="/clientes/:clientId" element={<ClientDetailPage />} />
+            <Route path="/forms" element={<FormsPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
