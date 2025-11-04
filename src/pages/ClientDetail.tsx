@@ -3,11 +3,15 @@ import { useParams, Link } from 'react-router-dom'
 import { Header } from '@/components/Header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Client } from '@/types'
+import { Client, AgentIdea } from '@/types'
 import { OpportunityMappingForm } from '@/components/OpportunityMappingForm'
-import { Building, Users, BarChart, Rocket } from 'lucide-react'
+import { Building, Users, BarChart, Rocket, Lightbulb, Bot } from 'lucide-react'
 import { getClientById } from '@/services/clients'
+import { getAgentIdeasByClientId } from '@/services/analysis'
 import { Skeleton } from '@/components/ui/skeleton'
+import { AgentIdeaCard } from '@/components/AgentIdeaCard'
+import { EditAgentIdeaSheet } from '@/components/EditAgentIdeaSheet'
+import { toast } from 'sonner'
 
 const ClientDetailPage = () => {
   const { clientId } = useParams<{ clientId: string }>()
@@ -16,35 +20,94 @@ const ClientDetailPage = () => {
   const [error, setError] = useState<string | null>(null)
   const [isFormOpen, setIsFormOpen] = useState(false)
 
-  useEffect(() => {
+  const [ideas, setIdeas] = useState<AgentIdea[]>([])
+  const [ideasLoading, setIdeasLoading] = useState(true)
+  const [editingIdea, setEditingIdea] = useState<AgentIdea | null>(null)
+  const [isEditSheetOpen, setIsEditSheetOpen] = useState(false)
+
+  const fetchClientAndIdeas = async (showLoader = true) => {
     if (!clientId) return
 
-    const fetchClient = async () => {
+    if (showLoader) {
       setLoading(true)
-      setError(null)
-      try {
-        const { data, error: fetchError } = await getClientById(
-          parseInt(clientId, 10),
-        )
-        if (fetchError) {
-          throw new Error('Failed to fetch client details.')
-        }
-        if (!data) {
-          throw new Error('Client not found.')
-        }
-        setClient(data)
-      } catch (err: any) {
-        setError(
+      setIdeasLoading(true)
+    }
+    setError(null)
+
+    try {
+      const clientIdNum = parseInt(clientId, 10)
+      const [clientResult, ideasResult] = await Promise.all([
+        getClientById(clientIdNum),
+        getAgentIdeasByClientId(clientIdNum),
+      ])
+
+      if (clientResult.error) throw new Error('Failed to fetch client details.')
+      if (!clientResult.data) throw new Error('Client not found.')
+      setClient(clientResult.data)
+
+      if (ideasResult.error) {
+        console.error('Failed to fetch agent ideas:', ideasResult.error)
+        toast.error('Erro ao carregar ideias de agentes.')
+      }
+      setIdeas(ideasResult.data || [])
+    } catch (err: any) {
+      setError(
+        err.message ||
           'Cliente não encontrado ou ocorreu um erro ao buscar os dados.',
-        )
-        console.error(err)
-      } finally {
+      )
+      console.error(err)
+    } finally {
+      if (showLoader) {
         setLoading(false)
       }
+      setIdeasLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchClientAndIdeas()
+  }, [clientId])
+
+  const handleEdit = (idea: AgentIdea) => {
+    setEditingIdea(idea)
+    setIsEditSheetOpen(true)
+  }
+
+  const handleUpdateSuccess = () => {
+    setIsEditSheetOpen(false)
+    fetchClientAndIdeas(false)
+    toast.success('Ideia de agente atualizada com sucesso!')
+  }
+
+  const renderIdeasSection = () => {
+    if (ideasLoading) {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <IdeaCardSkeleton />
+          <IdeaCardSkeleton />
+        </div>
+      )
     }
 
-    fetchClient()
-  }, [clientId])
+    if (ideas.length === 0) {
+      return (
+        <Card>
+          <CardContent className="p-6 text-center text-neutral-textSecondary flex flex-col items-center justify-center h-48">
+            <Bot className="mx-auto h-8 w-8 mb-2" />
+            Nenhuma ideia encontrada para este cliente.
+          </CardContent>
+        </Card>
+      )
+    }
+
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {ideas.map((idea) => (
+          <AgentIdeaCard key={idea.id} idea={idea} onEdit={handleEdit} />
+        ))}
+      </div>
+    )
+  }
 
   if (loading) {
     return (
@@ -58,8 +121,12 @@ const ClientDetailPage = () => {
             <Skeleton className="h-11 w-44 rounded-card" />
           </div>
           <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <Skeleton className="h-48 w-full rounded-lg" />
+            <div className="lg:col-span-2 space-y-6">
+              <Skeleton className="h-6 w-32 mb-4" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <IdeaCardSkeleton />
+                <IdeaCardSkeleton />
+              </div>
             </div>
             <div className="space-y-6">
               <Skeleton className="h-64 w-full rounded-lg" />
@@ -98,17 +165,13 @@ const ClientDetailPage = () => {
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Leads de Projeto</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-neutral-textSecondary">
-                  Nenhum lead de projeto gerado ainda. Preencha o formulário de
-                  mapeamento para começar.
-                </p>
-              </CardContent>
-            </Card>
+            <section>
+              <h2 className="text-h3 font-semibold text-neutral-textPrimary mb-4 flex items-center gap-2">
+                <Lightbulb className="h-5 w-5 text-primary" />
+                Ideias
+              </h2>
+              {renderIdeasSection()}
+            </section>
           </div>
 
           <div className="space-y-6">
@@ -160,8 +223,41 @@ const ClientDetailPage = () => {
         open={isFormOpen}
         onOpenChange={setIsFormOpen}
       />
+      {editingIdea && (
+        <EditAgentIdeaSheet
+          idea={editingIdea}
+          open={isEditSheetOpen}
+          onOpenChange={setIsEditSheetOpen}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
+      )}
     </div>
   )
 }
+
+const IdeaCardSkeleton = () => (
+  <div className="flex flex-col space-y-3 p-4 border rounded-lg bg-white">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-4">
+        <Skeleton className="h-11 w-11 rounded-lg" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[150px]" />
+          <Skeleton className="h-3 w-[120px]" />
+        </div>
+      </div>
+      <Skeleton className="h-6 w-16 rounded-pill" />
+    </div>
+    <Skeleton className="h-10 w-full" />
+    <div className="space-y-2">
+      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-3 w-full" />
+      <Skeleton className="h-3 w-5/6" />
+    </div>
+    <div className="pt-3 border-t flex justify-between items-center">
+      <Skeleton className="h-6 w-28 rounded-md" />
+      <Skeleton className="h-8 w-8 rounded-md" />
+    </div>
+  </div>
+)
 
 export default ClientDetailPage

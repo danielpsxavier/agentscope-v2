@@ -57,6 +57,42 @@ export const getAgentIdeas = async (
 }
 
 /**
+ * Fetches agent ideas for a specific client.
+ * @param clientId - The ID of the client.
+ * @returns An object containing an array of agent ideas or null, and any potential error.
+ */
+export const getAgentIdeasByClientId = async (
+  clientId: number,
+): Promise<{
+  data: AgentIdea[] | null
+  error: any
+}> => {
+  const { data, error } = await supabase
+    .from('agent_ideas')
+    .select(
+      `
+      *,
+      ai_analyses!inner(
+        opportunity_mappings!inner(
+          client_id,
+          client_name_on_mapping,
+          department_on_mapping
+        )
+      )
+    `,
+    )
+    .eq('ai_analyses.opportunity_mappings.client_id', clientId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error(`Error fetching agent ideas for client ${clientId}:`, error)
+    return { data: null, error }
+  }
+
+  return { data: data as AgentIdea[], error: null }
+}
+
+/**
  * Fetches a summary of agent ideas counts by status.
  * @returns An object containing the summary data or null, and any potential error.
  */
