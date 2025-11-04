@@ -1,6 +1,6 @@
 -- Alter profiles table to link to auth.users
 -- This assumes the 'id' column in 'profiles' is of type UUID and intended to match 'auth.users.id'
-DO $
+DO $$
 BEGIN
   IF NOT EXISTS (
     SELECT 1
@@ -14,7 +14,7 @@ BEGIN
       ON DELETE CASCADE;
   END IF;
 END;
-$;
+$$;
 
 -- Enable Row Level Security on the profiles table
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
@@ -39,4 +39,3 @@ CREATE POLICY "Users can insert their own profile."
 CREATE POLICY "Users can update own profile."
   ON public.profiles FOR UPDATE
   USING ( auth.uid() = id );
-
