@@ -272,39 +272,48 @@ export type Database = {
       }
       profiles: {
         Row: {
-          id: string
-          full_name: string | null
           avatar_url: string | null
-          updated_at: string
           created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
         }
         Insert: {
-          id: string
-          full_name?: string | null
           avatar_url?: string | null
-          updated_at?: string
           created_at?: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
         }
         Update: {
-          id?: string
-          full_name?: string | null
           avatar_url?: string | null
-          updated_at?: string
           created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
         }
         Relationships: [
           {
             foreignKeyName: 'profiles_id_fkey'
             columns: ['id']
             isOneToOne: true
-            referencedRelation: 'users'
+            referencedRelation: 'user_profiles'
             referencedColumns: ['id']
           },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      user_profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
