@@ -17,14 +17,17 @@ export const invokeAnalysisFunction = async () => {
 }
 
 /**
- * Fetches all agent ideas from the database, joining related client information.
+ * Fetches agent ideas from the database, with optional status filtering.
+ * @param statuses - An optional array of statuses to filter by.
  * @returns An object containing an array of agent ideas or null, and any potential error.
  */
-export const getAgentIdeas = async (): Promise<{
+export const getAgentIdeas = async (
+  statuses?: string[],
+): Promise<{
   data: AgentIdea[] | null
   error: any
 }> => {
-  const { data, error } = await supabase
+  let query = supabase
     .from('agent_ideas')
     .select(
       `
@@ -38,6 +41,12 @@ export const getAgentIdeas = async (): Promise<{
     `,
     )
     .order('created_at', { ascending: false })
+
+  if (statuses && statuses.length > 0) {
+    query = query.in('status', statuses)
+  }
+
+  const { data, error } = await query
 
   if (error) {
     console.error('Error fetching agent ideas:', error)

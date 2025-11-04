@@ -163,7 +163,7 @@ export const EditAgentIdeaSheet = ({
                     name="status"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Status da Trilha</FormLabel>
+                        <FormLabel>Status</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}

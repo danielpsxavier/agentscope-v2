@@ -10,6 +10,7 @@ import { Bot, AlertTriangle, RefreshCw } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { EditAgentIdeaSheet } from '@/components/EditAgentIdeaSheet'
+import { AgentStatusFilter } from '@/components/AgentStatusFilter'
 
 const AnalysisPage = () => {
   const [ideas, setIdeas] = useState<AgentIdea[]>([])
@@ -18,21 +19,26 @@ const AnalysisPage = () => {
   const [error, setError] = useState<string | null>(null)
   const [editingIdea, setEditingIdea] = useState<AgentIdea | null>(null)
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false)
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
 
-  const fetchIdeas = useCallback(async (showLoading = true) => {
-    if (showLoading) setLoading(true)
-    setError(null)
-    try {
-      const { data, error: fetchError } = await getAgentIdeas()
-      if (fetchError) throw fetchError
-      setIdeas(data || [])
-    } catch (err: any) {
-      setError('Falha ao carregar as ideias de agentes. Tente novamente.')
-      console.error(err)
-    } finally {
-      if (showLoading) setLoading(false)
-    }
-  }, [])
+  const fetchIdeas = useCallback(
+    async (showLoading = true) => {
+      if (showLoading) setLoading(true)
+      setError(null)
+      try {
+        const { data, error: fetchError } =
+          await getAgentIdeas(selectedStatuses)
+        if (fetchError) throw fetchError
+        setIdeas(data || [])
+      } catch (err: any) {
+        setError('Falha ao carregar as ideias de agentes. Tente novamente.')
+        console.error(err)
+      } finally {
+        if (showLoading) setLoading(false)
+      }
+    },
+    [selectedStatuses],
+  )
 
   useEffect(() => {
     fetchIdeas()
@@ -95,11 +101,12 @@ const AnalysisPage = () => {
         <div className="flex flex-col items-center justify-center text-center py-16 border-2 border-dashed border-neutral-border rounded-lg">
           <Bot className="w-12 h-12 text-neutral-textSecondary mb-4" />
           <h3 className="text-h3 text-neutral-textPrimary">
-            Nenhuma Ideia de Agente Gerada
+            Nenhuma Ideia de Agente Encontrada
           </h3>
           <p className="text-neutral-textSecondary mt-2">
-            Clique em "Analisar" para que a IA gere novas ideias a partir dos
-            formulários pendentes.
+            {selectedStatuses.length > 0
+              ? 'Nenhuma ideia corresponde aos filtros selecionados. Tente limpar os filtros.'
+              : 'Clique em "Analisar" para que a IA gere novas ideias a partir dos formulários pendentes.'}
           </p>
         </div>
       )
@@ -130,17 +137,23 @@ const AnalysisPage = () => {
             <h3 className="text-h3 text-neutral-textPrimary">
               Ideias de Agentes
             </h3>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => fetchIdeas()}
-              disabled={loading}
-            >
-              <RefreshCw
-                className={cn('w-4 h-4 mr-2', loading && 'animate-spin')}
+            <div className="flex items-center gap-2">
+              <AgentStatusFilter
+                selectedStatuses={selectedStatuses}
+                onStatusChange={setSelectedStatuses}
               />
-              Atualizar
-            </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fetchIdeas()}
+                disabled={loading}
+              >
+                <RefreshCw
+                  className={cn('w-4 h-4 mr-2', loading && 'animate-spin')}
+                />
+                Atualizar
+              </Button>
+            </div>
           </div>
           {renderContent()}
         </section>
