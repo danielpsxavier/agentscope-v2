@@ -58,7 +58,7 @@ const UsersPage = () => {
         return names[0].substring(0, 2).toUpperCase()
       }
     }
-    return user.email?.charAt(0).toUpperCase() ?? 'U'
+    return 'U'
   }
 
   const renderContent = () => {
@@ -98,7 +98,6 @@ const UsersPage = () => {
             <TableRow>
               <TableHead className="w-[80px]"></TableHead>
               <TableHead>Nome Completo</TableHead>
-              <TableHead>Email</TableHead>
               <TableHead>Data de Criação</TableHead>
             </TableRow>
           </TableHeader>
@@ -113,9 +112,6 @@ const UsersPage = () => {
                 </TableCell>
                 <TableCell className="font-medium text-neutral-textPrimary">
                   {user.full_name || 'N/A'}
-                </TableCell>
-                <TableCell className="text-neutral-textSecondary">
-                  {user.email}
                 </TableCell>
                 <TableCell className="text-neutral-textSecondary">
                   {user.created_at
@@ -158,9 +154,8 @@ const TableSkeleton = () => (
     {Array.from({ length: 5 }).map((_, i) => (
       <div key={i} className="flex items-center space-x-4 h-12">
         <Skeleton className="h-10 w-10 rounded-full" />
+        <Skeleton className="h-4 w-2/5" />
         <Skeleton className="h-4 w-1/4" />
-        <Skeleton className="h-4 w-1/3" />
-        <Skeleton className="h-4 w-1/5" />
       </div>
     ))}
   </div>
