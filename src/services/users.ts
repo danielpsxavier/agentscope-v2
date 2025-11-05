@@ -10,7 +10,11 @@ export const getUsers = async (): Promise<{
   data: UserProfile[] | null
   error: any
 }> => {
-  const { data, error } = await supabase.from('user_profiles').select('*')
+  const { data, error } = await supabase
+    .from('user_profiles')
+    .select('id, email, created_at, full_name, avatar_url, updated_at')
+    .order('created_at', { ascending: false })
+
   return { data, error }
 }
 

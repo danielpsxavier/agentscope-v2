@@ -3,6 +3,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AuthProvider, useAuth } from '@/hooks/use-auth'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import Index from './pages/Index'
 import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
@@ -15,6 +16,7 @@ import ThankYouPage from './pages/ThankYou'
 import LoginPage from './pages/Login'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import UsersPage from './pages/UsersPage'
+import ProfilePage from './pages/ProfilePage'
 
 const AppRoutes = () => {
   const { user } = useAuth()
@@ -41,6 +43,7 @@ const AppRoutes = () => {
           <Route path="/oportunidades" element={<OpportunitiesPage />} />
           <Route path="/analises" element={<AnalysisPage />} />
           <Route path="/usuarios" element={<UsersPage />} />
+          <Route path="/perfil" element={<ProfilePage />} />
         </Route>
       </Route>
 
@@ -54,11 +57,13 @@ const App = () => (
     future={{ v7_startTransition: false, v7_relativeSplatPath: false }}
   >
     <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <AppRoutes />
-      </TooltipProvider>
+      <SidebarProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <AppRoutes />
+        </TooltipProvider>
+      </SidebarProvider>
     </AuthProvider>
   </BrowserRouter>
 )

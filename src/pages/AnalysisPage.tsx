@@ -78,7 +78,7 @@ const AnalysisPage = () => {
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+        <div className="grid grid-cols-3 gap-md">
           {Array.from({ length: 3 }).map((_, index) => (
             <CardSkeleton key={index} />
           ))}
@@ -113,7 +113,7 @@ const AnalysisPage = () => {
     }
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+      <div className="grid grid-cols-3 gap-md">
         {ideas.map((idea) => (
           <AgentIdeaCard key={idea.id} idea={idea} onEdit={handleEdit} />
         ))}
@@ -122,7 +122,7 @@ const AnalysisPage = () => {
   }
 
   return (
-    <div className="p-lg">
+    <div className="flex-1">
       <div className="container mx-auto max-w-[1200px]">
         <Header
           title="Análises de IA"

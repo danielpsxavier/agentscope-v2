@@ -58,15 +58,15 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-neutral-pageBackground flex items-center justify-center p-4">
-      <Card className="w-full max-w-sm animate-fade-in-up">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-sm animate-fade-in-up shadow-lg rounded-2xl">
+        <CardHeader className="p-6 text-center">
           <div className="mx-auto mb-4 w-14 h-14 rounded-base bg-primary-start flex items-center justify-center">
             <Bot className="w-8 h-8 text-white" />
           </div>
-          <CardTitle className="text-2xl">Bem-vindo ao AgentScope</CardTitle>
+          <CardTitle className="text-2xl">Welcome</CardTitle>
           <CardDescription>Faça login para continuar</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {error && (

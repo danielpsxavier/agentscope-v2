@@ -36,7 +36,7 @@ const ClientsPage = () => {
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="flex flex-wrap gap-md">
+        <div className="flex gap-md overflow-x-auto pb-4">
           {Array.from({ length: 3 }).map((_, index) => (
             <CardSkeleton key={index} />
           ))}
@@ -70,7 +70,7 @@ const ClientsPage = () => {
     }
 
     return (
-      <div className="flex flex-wrap gap-md">
+      <div className="flex gap-md overflow-x-auto pb-4">
         {clients.map((client) => (
           <ClientCard key={client.id} client={client} />
         ))}
@@ -79,7 +79,7 @@ const ClientsPage = () => {
   }
 
   return (
-    <div className="p-lg">
+    <div className="flex-1">
       <div className="container mx-auto max-w-[1200px]">
         <Header
           title="Clientes"
@@ -105,7 +105,7 @@ const ClientsPage = () => {
 }
 
 const CardSkeleton = () => (
-  <div className="w-full max-w-[360px] min-w-[300px] p-4 border rounded-lg space-y-3 bg-white">
+  <div className="w-full max-w-[360px] min-w-[300px] p-4 border rounded-lg space-y-3 bg-white flex-shrink-0">
     <div className="flex items-start gap-4">
       <Skeleton className="w-11 h-11 rounded-base" />
       <div className="flex-1 space-y-2">

@@ -1,12 +1,11 @@
--- Create a view that joins user authentication data with profile data for easy querying.
+-- Recreate the view that joins user authentication data with profile data.
 CREATE OR REPLACE VIEW public.user_profiles AS
 SELECT
   u.id,
   u.email,
   u.created_at,
   p.full_name,
-  p.avatar_url,
-  p.bio
+  p.avatar_url
 FROM
   auth.users u
 LEFT JOIN

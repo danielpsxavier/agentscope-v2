@@ -26,4 +26,5 @@ CREATE POLICY "Authenticated users can upload their own avatar."
 CREATE POLICY "Users can update their own avatar."
   ON storage.objects FOR UPDATE
   TO authenticated
-  USING ( auth.uid()::text = (storage.foldername(name))[1] );
+  USING ( bucket_id = 'avatars' AND auth.uid()::text = (storage.foldername(name))[1] );
+

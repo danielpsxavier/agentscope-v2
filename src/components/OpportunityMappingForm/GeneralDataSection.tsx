@@ -32,7 +32,7 @@ export const GeneralDataSection = ({ form }: GeneralDataSectionProps) => {
         control={form.control}
         name="clientName"
         render={({ field }) => (
-          <FormItem className="md:col-span-2">
+          <FormItem className="col-span-2">
             <FormLabel>Nome do Cliente</FormLabel>
             <FormControl>
               <Input placeholder="Ex: TechCorp Brasil" {...field} />
@@ -115,7 +115,7 @@ export const GeneralDataSection = ({ form }: GeneralDataSectionProps) => {
               </FormControl>
               <SelectContent>
                 <SelectItem value="Baixo">Baixo</SelectItem>
-                <SelectItem value="Médio">Médio</SelectItem>
+                <SelectItem value="Médio">Média</SelectItem>
                 <SelectItem value="Alto">Alto</SelectItem>
               </SelectContent>
             </Select>
@@ -127,7 +127,7 @@ export const GeneralDataSection = ({ form }: GeneralDataSectionProps) => {
         control={form.control}
         name="mainSystems"
         render={({ field }) => (
-          <FormItem className="md:col-span-2">
+          <FormItem className="col-span-2">
             <FormLabel>Sistemas Principais Utilizados</FormLabel>
             <FormControl>
               <Textarea

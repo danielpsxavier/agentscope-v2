@@ -11,33 +11,55 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Search, Briefcase, Zap, BarChart, Rocket } from 'lucide-react'
+import {
+  Search,
+  Briefcase,
+  Zap,
+  BarChart,
+  Rocket,
+  AlertTriangle,
+} from 'lucide-react'
 import { Client, AgentIdeasSummary as AgentIdeasSummaryType } from '@/types'
 import { getClients } from '@/services/clients'
 import { getAgentIdeasSummary } from '@/services/analysis'
 import { Skeleton } from '@/components/ui/skeleton'
+import { NewOpportunitySheet } from '@/components/NewOpportunitySheet'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 const Index = () => {
+  const [isNewSheetOpen, setIsNewSheetOpen] = useState(false)
   const [clients, setClients] = useState<Client[]>([])
   const [clientsLoading, setClientsLoading] = useState(true)
   const [summary, setSummary] = useState<AgentIdeasSummaryType | null>(null)
   const [summaryLoading, setSummaryLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       setClientsLoading(true)
       setSummaryLoading(true)
+      setError(null)
 
-      const [clientsResult, summaryResult] = await Promise.all([
-        getClients(),
-        getAgentIdeasSummary(),
-      ])
+      try {
+        const [clientsResult, summaryResult] = await Promise.all([
+          getClients(),
+          getAgentIdeasSummary(),
+        ])
 
-      setClients(clientsResult.data || [])
-      setClientsLoading(false)
+        if (clientsResult.error) throw clientsResult.error
+        setClients(clientsResult.data || [])
 
-      setSummary(summaryResult.data || null)
-      setSummaryLoading(false)
+        if (summaryResult.error) throw summaryResult.error
+        setSummary(summaryResult.data || null)
+      } catch (err) {
+        console.error('Dashboard fetch error:', err)
+        setError(
+          'Não foi possível carregar os dados do dashboard. Tente novamente mais tarde.',
+        )
+      } finally {
+        setClientsLoading(false)
+        setSummaryLoading(false)
+      }
     }
     fetchData()
   }, [])
@@ -51,16 +73,35 @@ const Index = () => {
         )
       : 0
 
+  if (error) {
+    return (
+      <div className="flex-1">
+        <div className="container mx-auto max-w-[1200px]">
+          <Header
+            title="Dashboard"
+            subtitle="Visão geral das oportunidades de Agent AI"
+          />
+          <Alert variant="destructive" className="mt-6">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Erro ao Carregar</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="p-lg">
+    <div className="flex-1">
       <div className="container mx-auto max-w-[1200px]">
         <Header
           title="Dashboard"
           subtitle="Visão geral das oportunidades de Agent AI"
           buttonText="Novo Cliente"
+          onButtonClick={() => setIsNewSheetOpen(true)}
         />
 
-        <div className="grid gap-md grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
+        <div className="grid gap-md grid-cols-4 mt-6">
           <MetricCard
             title="Clientes Mapeados"
             value={clientsLoading ? '...' : clients.length.toString()}
@@ -114,8 +155,8 @@ const Index = () => {
           </Select>
         </div>
 
-        <section className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
+        <section className="mt-6 grid grid-cols-3 gap-6">
+          <div className="col-span-2">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-h3 text-neutral-textPrimary">
                 Clientes Recentes
@@ -138,11 +179,15 @@ const Index = () => {
                     ))}
             </div>
           </div>
-          <div className="lg:col-span-1">
+          <div className="col-span-1">
             <AgentIdeasSummary summary={summary} loading={summaryLoading} />
           </div>
         </section>
       </div>
+      <NewOpportunitySheet
+        open={isNewSheetOpen}
+        onOpenChange={setIsNewSheetOpen}
+      />
     </div>
   )
 }
