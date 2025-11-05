@@ -63,7 +63,7 @@ const LoginPage = () => {
           <div className="mx-auto mb-4 w-14 h-14 rounded-base bg-primary-start flex items-center justify-center">
             <Bot className="w-8 h-8 text-white" />
           </div>
-          <CardTitle className="text-2xl">Bem-vindo ao AgentScope</CardTitle>
+          <CardTitle className="text-2xl">Welcome</CardTitle>
           <CardDescription>Faça login para continuar</CardDescription>
         </CardHeader>
         <CardContent>
