@@ -41,14 +41,16 @@ interface EditAgentIdeaSheetProps {
   onUpdateSuccess: () => void
 }
 
-const parseJsonString = (jsonString: string | null): string[] => {
-  if (!jsonString) return []
-  try {
-    const parsed = JSON.parse(jsonString)
-    return Array.isArray(parsed) ? parsed : []
-  } catch (error) {
-    return []
-  }
+const formatToolsToString = (
+  tools: { nome: string; descricao: string }[] | null,
+): string => {
+  if (!tools || !Array.isArray(tools)) return ''
+  return tools.map((tool) => `${tool.nome} - ${tool.descricao}`).join('\n')
+}
+
+const formatBenefitsToString = (benefits: string[] | null): string => {
+  if (!benefits || !Array.isArray(benefits)) return ''
+  return benefits.join('\n')
 }
 
 export const EditAgentIdeaSheet = ({
@@ -69,10 +71,11 @@ export const EditAgentIdeaSheet = ({
         id: idea.id,
         agent_name: idea.agent_name,
         description: idea.description || '',
+        objective: idea.objective || '',
         complexity: idea.complexity || 'Media',
         status: idea.status,
-        key_features: parseJsonString(idea.key_features).join('\n'),
-        expected_benefits: parseJsonString(idea.expected_benefits).join('\n'),
+        tools: formatToolsToString(idea.tools),
+        expected_benefits: formatBenefitsToString(idea.expected_benefits),
       })
     }
   }, [idea, form])
@@ -126,13 +129,26 @@ export const EditAgentIdeaSheet = ({
                     <FormItem>
                       <FormLabel>Descrição</FormLabel>
                       <FormControl>
-                        <Textarea rows={4} {...field} />
+                        <Textarea rows={3} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <div className="grid grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="objective"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Objetivo</FormLabel>
+                      <FormControl>
+                        <Textarea rows={2} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
                     name="complexity"
@@ -189,14 +205,14 @@ export const EditAgentIdeaSheet = ({
                 </div>
                 <FormField
                   control={form.control}
-                  name="key_features"
+                  name="tools"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Funcionalidades Chave</FormLabel>
+                      <FormLabel>Ferramentas (Tools)</FormLabel>
                       <FormControl>
                         <Textarea
                           rows={4}
-                          placeholder="Uma funcionalidade por linha..."
+                          placeholder="Nome da Ferramenta - Descrição (uma por linha)..."
                           {...field}
                         />
                       </FormControl>

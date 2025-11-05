@@ -7,7 +7,15 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Bot, CheckCircle, Tag, BarChart, Briefcase, Edit } from 'lucide-react'
+import {
+  Bot,
+  CheckCircle,
+  Tag,
+  BarChart,
+  Briefcase,
+  Edit,
+  Target,
+} from 'lucide-react'
 import { AgentIdea } from '@/types'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
@@ -30,24 +38,13 @@ const statusStyles = {
   Implementado: 'bg-purple-100 text-purple-800 border-purple-200',
 }
 
-const parseJsonString = (jsonString: string | null): string[] => {
-  if (!jsonString) return []
-  try {
-    const parsed = JSON.parse(jsonString)
-    return Array.isArray(parsed) ? parsed : []
-  } catch (error) {
-    console.error('Failed to parse JSON string:', error)
-    return []
-  }
-}
-
 export const AgentIdeaCard = ({ idea, onEdit }: AgentIdeaCardProps) => {
   const clientName =
     idea.ai_analyses?.opportunity_mappings?.client_name_on_mapping
   const department =
     idea.ai_analyses?.opportunity_mappings?.department_on_mapping
-  const keyFeatures = parseJsonString(idea.key_features)
-  const expectedBenefits = parseJsonString(idea.expected_benefits)
+  const tools = idea.tools
+  const expectedBenefits = idea.expected_benefits
 
   return (
     <Card className="shadow-soft border-neutral-border flex flex-col">
@@ -79,20 +76,34 @@ export const AgentIdeaCard = ({ idea, onEdit }: AgentIdeaCardProps) => {
       </CardHeader>
       <CardContent className="flex-1 space-y-4">
         <p className="text-sm text-neutral-textSecondary">{idea.description}</p>
-        {keyFeatures.length > 0 && (
+        {idea.objective && (
+          <div>
+            <h4 className="text-xs font-semibold text-neutral-textSecondary mb-2 flex items-center gap-1.5">
+              <Target className="w-3.5 h-3.5 text-purple-600" />
+              Objetivo Principal
+            </h4>
+            <p className="text-sm text-neutral-textSecondary pl-2">
+              {idea.objective}
+            </p>
+          </div>
+        )}
+        {tools && tools.length > 0 && (
           <div>
             <h4 className="text-xs font-semibold text-neutral-textSecondary mb-2 flex items-center gap-1.5">
               <CheckCircle className="w-3.5 h-3.5 text-green-600" />
-              Funcionalidades Chave
+              Ferramentas (Tools)
             </h4>
-            <ul className="list-disc list-inside text-sm text-neutral-textSecondary space-y-1 pl-2">
-              {keyFeatures.map((feature, i) => (
-                <li key={i}>{feature}</li>
+            <ul className="list-none text-sm text-neutral-textSecondary space-y-1.5 pl-2">
+              {tools.map((tool, i) => (
+                <li key={i}>
+                  <span className="font-semibold">{tool.nome}:</span>{' '}
+                  {tool.descricao}
+                </li>
               ))}
             </ul>
           </div>
         )}
-        {expectedBenefits.length > 0 && (
+        {expectedBenefits && expectedBenefits.length > 0 && (
           <div>
             <h4 className="text-xs font-semibold text-neutral-textSecondary mb-2 flex items-center gap-1.5">
               <Tag className="w-3.5 h-3.5 text-blue-600" />

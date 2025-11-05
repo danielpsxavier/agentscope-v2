@@ -1,4 +1,4 @@
-import { Tables } from '@/lib/supabase/types'
+import { Tables, Json } from '@/lib/supabase/types'
 
 export type Client = Tables<'clients'> & {
   leads: number
@@ -20,7 +20,12 @@ export type AIAnalysis = {
   }[]
 }
 
-export type AgentIdea = Tables<'agent_ideas'> & {
+export type AgentIdea = Omit<
+  Tables<'agent_ideas'>,
+  'tools' | 'expected_benefits'
+> & {
+  tools: { nome: string; descricao: string }[] | null
+  expected_benefits: string[] | null
   ai_analyses: {
     opportunity_mappings: {
       client_name_on_mapping: string
@@ -43,9 +48,9 @@ export type Opportunity = Tables<'ai_analyses'> & {
 
 export type UserProfile = {
   id: string
-  email: string
+  email?: string
   created_at?: string
   full_name: string | null
   avatar_url: string | null
-  updated_at?: string
+  bio: string | null
 }
