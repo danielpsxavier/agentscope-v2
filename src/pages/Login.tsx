@@ -57,7 +57,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-pageBackground flex items-center justify-center p-4">
+    <div className="min-h-screen bg-neutral-pageBackground grid place-items-center p-4">
       <Card className="w-full max-w-sm animate-fade-in-up">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 w-14 h-14 rounded-base bg-primary-start flex items-center justify-center">
