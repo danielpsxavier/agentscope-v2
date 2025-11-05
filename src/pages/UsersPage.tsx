@@ -48,7 +48,7 @@ const UsersPage = () => {
   }
 
   return (
-    <div className="p-lg">
+    <div className="flex-1">
       <div className="container mx-auto max-w-[1200px]">
         <Header
           title="Gerenciamento de Usuários"

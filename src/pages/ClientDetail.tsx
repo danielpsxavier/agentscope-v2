@@ -117,7 +117,7 @@ const ClientDetailPage = () => {
 
   if (error || !client) {
     return (
-      <div className="p-lg text-center">
+      <div className="flex-1 text-center p-4">
         <h2 className="text-h2">Cliente não encontrado</h2>
         <p className="text-neutral-textSecondary">
           {error ||
@@ -131,7 +131,7 @@ const ClientDetailPage = () => {
   }
 
   return (
-    <div className="p-lg">
+    <div className="flex-1">
       <div className="container mx-auto max-w-[1200px]">
         <Header
           title={client.name}
@@ -315,7 +315,7 @@ const TableSkeleton = () => (
 )
 
 const PageSkeleton = () => (
-  <div className="p-lg">
+  <div className="flex-1">
     <div className="container mx-auto max-w-[1200px]">
       <div className="flex items-center justify-between h-[88px]">
         <div>

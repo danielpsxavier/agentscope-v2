@@ -98,7 +98,7 @@ const OpportunitiesPage = () => {
   }
 
   return (
-    <div className="p-lg">
+    <div className="flex-1">
       <div className="container mx-auto max-w-[1200px]">
         <header className="flex items-center justify-between h-[88px]">
           <div>
