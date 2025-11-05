@@ -12,6 +12,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+-- Drop the trigger if it already exists to ensure the script is re-runnable.
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+
 -- Trigger to execute the function after a new user is inserted
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
@@ -29,3 +32,4 @@ LEFT JOIN
   public.profiles p ON u.id = p.id
 WHERE
   p.id IS NULL;
+
