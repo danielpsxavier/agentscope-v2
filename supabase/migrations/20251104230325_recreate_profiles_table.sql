@@ -1,3 +1,6 @@
+-- Drop the profiles table if it exists, along with any dependent objects.
+DROP TABLE IF EXISTS public.profiles CASCADE;
+
 -- Create the profiles table
 CREATE TABLE public.profiles (
     id UUID PRIMARY KEY NOT NULL,
@@ -30,4 +33,3 @@ CREATE POLICY "Users can insert their own profile."
 CREATE POLICY "Users can update their own profile."
   ON public.profiles FOR UPDATE
   USING ( auth.uid() = id );
-

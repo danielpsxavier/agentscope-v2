@@ -7,7 +7,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -- Password: Daniel123
 -- This approach is for development/seeding and not recommended for production user management.
 
-DO $
+DO $$
 DECLARE
     user_id UUID;
     user_email TEXT := 'dani.sperche@gmail.com';
@@ -52,5 +52,4 @@ BEGIN
             NOW()
         );
     END IF;
-END $;
-
+END $$;

@@ -1,6 +1,6 @@
 -- Function to create a new ai_analyses record for each new opportunity_mapping
 CREATE OR REPLACE FUNCTION public.create_ai_analysis_on_mapping_insert()
-RETURNS TRIGGER AS $
+RETURNS TRIGGER AS $$
 BEGIN
   -- Insert a new record into ai_analyses table, linking it to the new opportunity_mapping
   -- and setting its initial processed status to false.
@@ -8,7 +8,7 @@ BEGIN
   VALUES (NEW.id, false);
   RETURN NEW;
 END;
-$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Drop the trigger if it already exists to ensure the script is re-runnable.
 DROP TRIGGER IF EXISTS trigger_create_ai_analysis ON public.opportunity_mappings;
@@ -31,4 +31,3 @@ LEFT JOIN
   public.ai_analyses aa ON om.id = aa.opportunity_mapping_id
 WHERE
   aa.opportunity_mapping_id IS NULL;
-
