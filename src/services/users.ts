@@ -3,7 +3,7 @@ import { UserProfile } from '@/types'
 import { NewUserData } from '@/schemas/userSchema'
 
 /**
- * Fetches all user profiles from the profiles table.
+ * Fetches all user profiles from the user_profiles view.
  * @returns An object containing an array of user profiles or null, and any potential error.
  */
 export const getUsers = async (): Promise<{
@@ -11,8 +11,8 @@ export const getUsers = async (): Promise<{
   error: any
 }> => {
   const { data, error } = await supabase
-    .from('profiles')
-    .select('id, created_at, full_name, avatar_url')
+    .from('user_profiles')
+    .select('id, email, created_at, full_name, avatar_url, updated_at')
     .order('created_at', { ascending: false })
 
   return { data, error }

@@ -43,7 +43,9 @@ export type Opportunity = Tables<'ai_analyses'> & {
 
 export type UserProfile = {
   id: string
+  email: string
   created_at?: string
   full_name: string | null
   avatar_url: string | null
+  updated_at?: string
 }

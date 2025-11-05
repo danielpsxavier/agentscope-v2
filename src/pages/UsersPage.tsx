@@ -54,9 +54,12 @@ const UsersPage = () => {
       if (names.length > 1) {
         return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
       }
-      if (names.length === 1) {
+      if (names.length === 1 && names[0].length > 0) {
         return names[0].substring(0, 2).toUpperCase()
       }
+    }
+    if (user.email) {
+      return user.email.substring(0, 2).toUpperCase()
     }
     return 'U'
   }
@@ -98,6 +101,7 @@ const UsersPage = () => {
             <TableRow>
               <TableHead className="w-[80px]"></TableHead>
               <TableHead>Nome Completo</TableHead>
+              <TableHead>Email</TableHead>
               <TableHead>Data de Criação</TableHead>
             </TableRow>
           </TableHeader>
@@ -112,6 +116,9 @@ const UsersPage = () => {
                 </TableCell>
                 <TableCell className="font-medium text-neutral-textPrimary">
                   {user.full_name || 'N/A'}
+                </TableCell>
+                <TableCell className="text-neutral-textSecondary">
+                  {user.email}
                 </TableCell>
                 <TableCell className="text-neutral-textSecondary">
                   {user.created_at
@@ -154,7 +161,8 @@ const TableSkeleton = () => (
     {Array.from({ length: 5 }).map((_, i) => (
       <div key={i} className="flex items-center space-x-4 h-12">
         <Skeleton className="h-10 w-10 rounded-full" />
-        <Skeleton className="h-4 w-2/5" />
+        <Skeleton className="h-4 w-1/4" />
+        <Skeleton className="h-4 w-1/3" />
         <Skeleton className="h-4 w-1/4" />
       </div>
     ))}
