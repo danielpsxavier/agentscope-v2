@@ -1,7 +1,12 @@
 import { Outlet } from 'react-router-dom'
 import { Sidebar } from '@/components/Sidebar'
-import { SidebarProvider, useSidebar } from '@/components/ui/sidebar'
+import {
+  SidebarProvider,
+  useSidebar,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
+import { PanelLeft } from 'lucide-react'
 
 const LayoutContent = () => {
   const { state, isMobile } = useSidebar()
@@ -15,6 +20,11 @@ const LayoutContent = () => {
           'lg:ml-[72px]': state === 'collapsed' && !isMobile,
         })}
       >
+        <header className="lg:hidden flex items-center h-16 px-4 border-b bg-white sticky top-0 z-10">
+          <SidebarTrigger>
+            <PanelLeft className="h-6 w-6 text-neutral-textPrimary" />
+          </SidebarTrigger>
+        </header>
         <Outlet />
       </main>
     </div>
