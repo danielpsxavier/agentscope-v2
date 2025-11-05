@@ -27,7 +27,7 @@ export const ContextChallengeSection = ({
         control={form.control}
         name="businessObjective"
         render={({ field }) => (
-          <FormItem className="md:col-span-2">
+          <FormItem className="col-span-2">
             <FormLabel>Objetivo de negócio da área</FormLabel>
             <FormControl>
               <Textarea
@@ -119,7 +119,7 @@ export const ContextChallengeSection = ({
         control={form.control}
         name="expectedBenefit"
         render={({ field }) => (
-          <FormItem className="md:col-span-2">
+          <FormItem className="col-span-2">
             <FormLabel>Benefício Esperado</FormLabel>
             <FormControl>
               <Textarea

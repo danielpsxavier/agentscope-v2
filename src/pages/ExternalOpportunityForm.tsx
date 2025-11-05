@@ -45,7 +45,7 @@ const FormSection = ({
       </h3>
       <p className="mt-1 text-sm text-neutral-textSecondary">{description}</p>
     </div>
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">{children}</div>
+    <div className="grid grid-cols-2 gap-6">{children}</div>
   </div>
 )
 
@@ -114,7 +114,7 @@ const ExternalOpportunityFormPage = () => {
                     control={form.control}
                     name="client_name_on_mapping"
                     render={({ field }) => (
-                      <FormItem className="md:col-span-2">
+                      <FormItem className="col-span-2">
                         <FormLabel>Nome do Cliente</FormLabel>
                         <FormControl>
                           <Input placeholder="Ex: TechCorp Brasil" {...field} />
@@ -191,7 +191,7 @@ const ExternalOpportunityFormPage = () => {
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="Baixo">Baixo</SelectItem>
-                            <SelectItem value="Médio">Médio</SelectItem>
+                            <SelectItem value="Médio">Média</SelectItem>
                             <SelectItem value="Alto">Alto</SelectItem>
                           </SelectContent>
                         </Select>
@@ -203,7 +203,7 @@ const ExternalOpportunityFormPage = () => {
                     control={form.control}
                     name="main_systems_on_mapping"
                     render={({ field }) => (
-                      <FormItem className="md:col-span-2">
+                      <FormItem className="col-span-2">
                         <FormLabel>Sistemas Principais Utilizados</FormLabel>
                         <FormControl>
                           <Textarea
@@ -225,7 +225,7 @@ const ExternalOpportunityFormPage = () => {
                     control={form.control}
                     name="business_objective"
                     render={({ field }) => (
-                      <FormItem className="md:col-span-2">
+                      <FormItem className="col-span-2">
                         <FormLabel>Objetivo de negócio da área</FormLabel>
                         <FormControl>
                           <Textarea
@@ -322,7 +322,7 @@ const ExternalOpportunityFormPage = () => {
                     control={form.control}
                     name="expected_benefit"
                     render={({ field }) => (
-                      <FormItem className="md:col-span-2">
+                      <FormItem className="col-span-2">
                         <FormLabel>Benefício Esperado</FormLabel>
                         <FormControl>
                           <Textarea
@@ -344,7 +344,7 @@ const ExternalOpportunityFormPage = () => {
                     control={form.control}
                     name="critical_systems"
                     render={({ field }) => (
-                      <FormItem className="md:col-span-2">
+                      <FormItem className="col-span-2">
                         <FormLabel>Sistemas críticos</FormLabel>
                         <FormControl>
                           <Textarea
@@ -439,7 +439,7 @@ const ExternalOpportunityFormPage = () => {
                 <div className="flex justify-end pt-4">
                   <Button
                     type="submit"
-                    className="primary-btn w-full md:w-auto"
+                    className="primary-btn w-auto"
                     disabled={isSubmitting}
                   >
                     {isSubmitting && (

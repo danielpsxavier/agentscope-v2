@@ -24,7 +24,7 @@ export const ProcessesToolsSection = ({ form }: ProcessesToolsSectionProps) => {
         control={form.control}
         name="criticalSystems"
         render={({ field }) => (
-          <FormItem className="md:col-span-2">
+          <FormItem className="col-span-2">
             <FormLabel>Sistemas críticos</FormLabel>
             <FormControl>
               <Textarea

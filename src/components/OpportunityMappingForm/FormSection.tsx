@@ -18,6 +18,6 @@ export const FormSection = ({
       </h3>
       <p className="mt-1 text-sm text-neutral-textSecondary">{description}</p>
     </div>
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">{children}</div>
+    <div className="grid grid-cols-2 gap-6">{children}</div>
   </div>
 )

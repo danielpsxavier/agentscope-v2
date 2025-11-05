@@ -101,7 +101,7 @@ const Index = () => {
           onButtonClick={() => setIsNewSheetOpen(true)}
         />
 
-        <div className="grid gap-md grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
+        <div className="grid gap-md grid-cols-4 mt-6">
           <MetricCard
             title="Clientes Mapeados"
             value={clientsLoading ? '...' : clients.length.toString()}
@@ -155,8 +155,8 @@ const Index = () => {
           </Select>
         </div>
 
-        <section className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
+        <section className="mt-6 grid grid-cols-3 gap-6">
+          <div className="col-span-2">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-h3 text-neutral-textPrimary">
                 Clientes Recentes
@@ -179,7 +179,7 @@ const Index = () => {
                     ))}
             </div>
           </div>
-          <div className="lg:col-span-1">
+          <div className="col-span-1">
             <AgentIdeasSummary summary={summary} loading={summaryLoading} />
           </div>
         </section>

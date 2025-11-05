@@ -69,7 +69,7 @@ export const Sidebar = () => {
   }
 
   return (
-    <SidebarContainer className="bg-neutral-sidebar text-neutral-textInverse border-r-0 lg:h-screen lg:sticky top-0 lg:w-[280px] flex-shrink-0">
+    <SidebarContainer className="bg-neutral-sidebar text-neutral-textInverse border-r-0 h-screen sticky top-0 w-[280px] flex-shrink-0">
       <SidebarHeader className="h-[88px] flex items-center px-5">
         <div className="flex items-center gap-3 overflow-hidden">
           <div className="w-11 h-11 rounded-base bg-primary-start flex items-center justify-center flex-shrink-0">

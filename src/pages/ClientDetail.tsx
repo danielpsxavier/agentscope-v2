@@ -140,8 +140,8 @@ const ClientDetailPage = () => {
           onButtonClick={() => setIsFormOpen(true)}
         />
 
-        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-1 space-y-6">
+        <div className="mt-6 grid grid-cols-3 gap-6">
+          <div className="col-span-1 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Informações do Cliente</CardTitle>
@@ -187,7 +187,7 @@ const ClientDetailPage = () => {
             </Card>
           </div>
 
-          <div className="lg:col-span-2 space-y-6">
+          <div className="col-span-2 space-y-6">
             <section>
               <h2 className="text-h3 font-semibold text-neutral-textPrimary mb-4 flex items-center gap-2">
                 <Lightbulb className="h-5 w-5 text-primary" />
@@ -324,11 +324,11 @@ const PageSkeleton = () => (
         </div>
         <Skeleton className="h-11 w-44 rounded-card" />
       </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-1 space-y-6">
+      <div className="mt-6 grid grid-cols-3 gap-6">
+        <div className="col-span-1 space-y-6">
           <Skeleton className="h-80 w-full rounded-lg" />
         </div>
-        <div className="lg:col-span-2 space-y-6">
+        <div className="col-span-2 space-y-6">
           <Skeleton className="h-6 w-48 mb-4" />
           <Skeleton className="h-64 w-full rounded-lg" />
         </div>
