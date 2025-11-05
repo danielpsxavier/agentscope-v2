@@ -13,3 +13,4 @@ LEFT JOIN
 
 -- Grant usage permissions to the authenticated role
 GRANT SELECT ON public.user_profiles TO authenticated;
+
