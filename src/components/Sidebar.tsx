@@ -29,7 +29,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
-  SidebarTrigger,
 } from '@/components/ui/sidebar'
 
 const menuItems = [
@@ -74,7 +73,7 @@ export const Sidebar = () => {
       collapsible="icon"
       className="bg-neutral-sidebar text-neutral-textInverse border-r-0 fixed h-full z-20"
     >
-      <SidebarHeader className="h-[88px] flex items-center justify-between px-5">
+      <SidebarHeader className="h-[88px] flex items-center px-5">
         <div className="flex items-center gap-3 overflow-hidden">
           <div className="w-11 h-11 rounded-base bg-primary-start flex items-center justify-center flex-shrink-0">
             <Bot className="w-6 h-6 text-white" />
@@ -83,7 +82,6 @@ export const Sidebar = () => {
             AgentScope
           </span>
         </div>
-        <SidebarTrigger className="text-white hover:bg-white/5 hover:text-white" />
       </SidebarHeader>
       <SidebarContent as="nav" className="flex-1 px-3">
         <SidebarMenu>
